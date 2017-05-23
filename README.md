@@ -1,8 +1,11 @@
-# ETS Docker Image
+# Akamai ETS Docker Image
 
 ## About
-This container runs the Akamai ESI Test Server. The container OS is Ubuntu 14.04
+This container runs the Akamai Edge Side Includes Test Server. The container OS is Ubuntu 14.04
 Trusty Tahr. Configuration is set via environment variables passed via Docker.
+
+For more information on ESI, please visit https://www.akamai.com/us/en/support/esi.jsp.
+For code samples, see http://esi-examples.akamai.com/.
 
 ## Running
 By default, the servers run on ports 80 (ETS) and 81 (sandbox), with a hostname
@@ -26,8 +29,9 @@ www.akamai.com:443 --debug www.akamai.com" akamai-ets:latest`
 ### Basic usage (remote origin with GEO setting)
 `docker run -d --net host -e "CONFIGURE_EXTRA_OPTS=--remote_origin
 www.akamai.com:443 --geo
-www.akamai.com:www.akamai.com:georegion=246,country_code=US,region_code=CA,city=SANJOSE,dma=807,pmsa=7400,areacode=408,county=SANTACLARA,fips=06085,lat=37.3353,long=-121.8938,timezone=PST,network_type=dialup"
-akamai-ets:latest`
+www.akamai.com:www.akamai.com:georegion=246,country_code=US,region_code=CA, \
+city=SANJOSE,dma=807,pmsa=7400,areacode=408,county=SANTACLARA,fips=06085, \
+lat=37.3353,long=-121.8938,timezone=PST,network_type=dialup" akamai-ets:latest`
 
 ### Advanced usage (changing default hostname and ports - note the use of -p)
 `docker run -d -p 8080:8080 -p 8081:8081 -e
@@ -62,7 +66,9 @@ Docker for Mac doesn't currently support `--net host`; [you must forward ports](
 * `--debug <hostname>` - enable ESI debugging for that hostname
 * `--geo <hostname:settings>` - enable Edgescape for a hostname via mock data
     - Sample GEO flag:
-      `www.akamai.com:georegion=246,country_code=US,region_code=CA,city=SANJOSE,dma=807,pmsa=7400,areacode=408,county=SANTACLARA,fips=06085,lat=37.3353,long=-121.8938,timezone=PST,network_type=dialup`
+      `www.akamai.com:georegion=246,country_code=US,region_code=CA,city=SANJOSE,
+      dma=807,pmsa=7400,areacode=408,county=SANTACLARA,fips=06085,lat=37.3353,
+      long=-121.8938,timezone=PST,network_type=dialup`
 
 ## TLS/HTTPS
 The ESI test server doesn't support HTTPS for incoming connections, but remote
