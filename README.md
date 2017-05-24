@@ -91,6 +91,9 @@ another container.
 You can shell into the container using `docker exec -ti <container ID> bash`.
 Logs can be found in `/opt/akamai-ets/logs`.
 
+# Status page
+A basic status page implemented using `mod_status` is available at `/server-status` on the sandbox server.
+
 ## Mounting a directory of ESI pages
 You can trivially mount HTML files containing ESI tags in the sandbox server as follows:
 
