@@ -90,10 +90,6 @@ another container.
 ## Viewing logs and modifying files
 You can shell into the container using `docker exec -ti <container ID> bash`.
 Logs can be found in `/opt/akamai-ets/logs`.
-
-# Status page
-A basic status page implemented using `mod_status` is available at `/server-status` on the sandbox server.
-
 ## Mounting a directory of ESI pages
 You can trivially mount HTML files containing ESI tags in the sandbox server as follows:
 
@@ -101,6 +97,12 @@ You can trivially mount HTML files containing ESI tags in the sandbox server as 
 akamai-ets:latest`
 
 If you issue requests via the ETS port (80 by default), the ESI tags will be processed. If you want to enable ESI debugging, pass the `--debug localhost` parameter via the `CONFIGURE_EXTRA_OPTS` environment variable. (Substitute `localhost` for the value of the `--local_hostname` parameter if applicable.
+
+## Status page
+A basic status page implemented using `mod_status` is available at `/server-status` on the sandbox server.
+
+## Security
+This software is not designed for production use, and should not be used in unrestricted environments. For security on public or untrusted networks, ensure that your Docker network configuration does not expose ports except to the local machine.
 
 ## License
 LICENSE AGREEMENT
