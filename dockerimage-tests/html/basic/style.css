@@ -1,0 +1,57 @@
+html {
+}
+body {
+    background: white;
+    font-family: Arial;
+    margin: 0;
+    padding: 0;
+    color: #444444;
+    background-color: rgb(71, 74, 76);
+}
+.page {
+    color: #57656e;
+    background-color: white;
+}
+.page .content {
+    margin: 0 auto;
+    padding: 20px 10px;
+    max-width: 600px;
+    font-size: 18px;
+}
+.header a.akamai {
+    position: fixed;
+    top: 50px;
+    left: 50px;
+    display: block;
+    width: 140px;
+    height: 41px;
+    background: transparent url(akamai-logo.png) 0 0 no-repeat;
+    text-decoration: none;
+}
+.header a.akamai:visited {
+}
+.header a.akamai span {
+    color: transparent;
+}
+
+h1 {
+    font-size: 40px;
+    color: #0193ce;
+    background-color: #98D3EE;
+    background-image:linear-gradient(to right, white 0%, #98D3EE 100%);
+    text-align: right;
+    padding: 0 4px;
+    height: 37px;
+}
+h2 {
+    /*color: #E36014;*/
+    color: #F1843B;
+    font-size: 20px;
+}
+.footer {
+    color: white;
+    background-color: rgb(71, 74, 76);
+    text-align: right;
+    font-size: 11px;
+    padding: 30px 100px;
+}
