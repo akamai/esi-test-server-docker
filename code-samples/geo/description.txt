@@ -1,0 +1,11 @@
+Example: Eliminating a splash screen for geographies
+
+Description : The following ESI example eliminates the need for a splash
+screen that gathers an end-users geographic information and directs them to
+the appropriate page accordingly. Using ESI the spash screen can be eliminated
+as it can use the EdgeScape information in ESI to send the user automatically to
+the appropriate page.
+
+Logic of the page: End users country code is checked by ESI's variable and if it 
+matches US or DE or JP or FR the appropriate page is returned. If none of the country
+codes checked match, a default page is returned.  

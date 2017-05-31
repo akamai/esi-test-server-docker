@@ -1,0 +1,94 @@
+<html>
+<body>
+
+<esi:comment text="List items are accessed using the position (starting with 0) as the key."/>
+
+<esi:assign name="quotes" 
+value="['Problems that go away by themselves tend to come back by themselves.',
+'This space intentionally left blank',
+'The early bird gets the worm, but the second mouse gets the cheese',
+'Mon Feb 30 24:08:11 EDT 2030',
+'I love mankind; its people I cant stand. - Charles Schultz',
+'I used to be indecisive, but now I am not sure.',
+'2 + 2 = 5 for extremely large values of 2.',
+'Does fuzzy logic tickle?',
+'Enter any 11-digit prime number to continue...',
+'E-mail returned to sender -- insufficient voltage.',
+'One never knows, does one?',
+'Good morning is an oxymoron.']"/>
+
+<esi:comment 
+text="Dictionary items are accessed by a key that can be a number or a string. Dictionaries can mix sub-types."/>
+
+<esi:assign name="numbers"
+value="{'0':0,
+'1':1,
+'2':2,
+'3':3,
+'4':4,
+'5':5,
+'6':6,
+'7':7,
+'8':8,
+'9':9,
+'10':10,
+'11':11,
+'12':12}"/>
+
+<esi:choose>
+  <esi:when test="$(QUERY_STRING{'i'})">
+    <esi:assign name="keyAsNumber" value="$(numbers{$(QUERY_STRING{'i'})})"/>
+
+    <esi:choose>
+      <esi:when test="!$(keyAsNumber)">
+        <esi:assign name="keyAsNumber" value="1"/>
+      </esi:when>
+    </esi:choose>
+    
+    <esi:assign name="quote" value="$(quotes{$(keyAsNumber) - 1})"/>
+    
+    <esi:choose>
+      <esi:when test="!$(quote)">
+        <esi:assign name="quote" value="$(quotes{0})"/>
+      </esi:when>
+    </esi:choose>
+
+  </esi:when>
+  <esi:otherwise>
+    <esi:assign name="quote" value="$(quotes{0})"/>
+    <esi:assign name="keyAsNumber" value="1"/>
+   </esi:otherwise>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(keyAsNumber) > 1">
+	<esi:assign name="prev" value="$(keyAsNumber) - 1"/>
+  </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(keyAsNumber) < $len($(quotes))">
+	<esi:assign name="next" value="$(keyAsNumber) + 1"/>
+  </esi:when>
+</esi:choose>
+
+<esi:vars>
+<b>$(quote)</b><br>
+</esi:vars>
+
+<esi:choose>
+  <esi:when test="$(prev)">
+    <a href="quotes.html?i=$(prev)">[Previous]</a>
+  </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(next)">
+    <a href="quotes.html?i=$(next)">[Next]</a>
+  </esi:when>
+</esi:choose>
+
+<esi:include src="footer.html?rp=$(REQUEST_PATH)"/>
+
+</body>
+</html>

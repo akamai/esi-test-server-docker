@@ -1,0 +1,10 @@
+<html>
+<body>
+
+<esi:assign name="check_list" value="$(QUERY_STRING{'sym'})"/>
+<esi:include src="loop_body.html"/>
+
+<esi:include src="footer.html?rp=$(REQUEST_PATH)"/>
+
+</body>
+</html>

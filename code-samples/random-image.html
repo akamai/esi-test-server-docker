@@ -1,0 +1,30 @@
+<html>
+<body>
+
+<!-- image list -->
+<esi:assign name="image_list">
+['quote1.gif','quote2.gif','quote3.gif','quote4.gif','quote5.gif','quote6.gif','quote7.gif']
+</esi:assign>
+
+<!-- choosing random offset --> 
+<esi:assign name="index" value="$rand()%$len($(image_list))" />
+
+<esi:vars>
+<!--
+Index: $(index) <br>
+Image: $(image_list{$(index)}) <br>
+-->
+</esi:vars>
+
+<center>
+<esi:vars>
+<img src="$(image_list{$(index)})" border="0">
+</esi:vars>
+</center>
+
+<br>Refresh the page to randomly display an image picked from a predefined list of images. 
+
+<esi:include src="footer.html?rp=$(REQUEST_PATH)"/>
+
+</body>
+</html>

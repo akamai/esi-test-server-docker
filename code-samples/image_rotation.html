@@ -1,0 +1,69 @@
+<html>
+<body>
+
+<esi:comment text="List items are accessed using the position (starting with 0) as the key."/>
+
+<esi:assign name="images" value="['quote1.jpg', 'quote2.jpg', 'quote3.jpg', 'quote4.jpg']"/>
+
+<esi:comment
+text="Dictionary items are accessed by a key that can be a number or a string. Dictionaries can mix sub-types."/>
+
+<esi:assign name="numbers" value="{'0':0, '1':1, '2':2, '3':3, '4':4}"/>
+
+<esi:choose>
+  <esi:when test="$(QUERY_STRING{'i'})">
+    <esi:assign name="image_number" value="$(numbers{$(QUERY_STRING{'i'})})"/>
+
+    <esi:choose>
+      <esi:when test="!$(image_number)">
+        <esi:assign name="image_number" value="1"/>
+      </esi:when>
+    </esi:choose>
+
+    <esi:assign name="the_image" value="$(images{$(image_number) - 1})"/>
+
+    <esi:choose>
+      <esi:when test="!$(the_image)">
+        <esi:assign name="the_image" value="$(images{0})"/>
+      </esi:when>
+    </esi:choose>
+
+  </esi:when>
+  <esi:otherwise>
+    <esi:assign name="the_image" value="$(images{0})"/>
+    <esi:assign name="image_number" value="1"/>
+   </esi:otherwise>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(image_number) > 1">
+	<esi:assign name="prev" value="$(image_number) - 1"/>
+  </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(image_number) < $len($(images))">
+	<esi:assign name="next" value="$(image_number) + 1"/>
+  </esi:when>
+</esi:choose>
+
+<esi:vars>
+<img src="$(the_image)" border="0"/><br>
+</esi:vars>
+
+<esi:choose>
+  <esi:when test="$(prev)">
+    <a href="$(REQUEST_PATH)?i=$(prev)">[Previous]</a>
+  </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(next)">
+    <a href="$(REQUEST_PATH)?i=$(next)">[Next]</a>
+  </esi:when>
+</esi:choose>
+
+<esi:include src="footer.html?rp=$(REQUEST_PATH)"/>
+
+</body>
+</html>

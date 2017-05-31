@@ -1,0 +1,43 @@
+<esi:comment text="List items are accessed using the position (starting with 0) as the key."/>
+
+<esi:assign name="pages" value="['page1.html', 'page2.html', 'page3.html']"/>
+
+<esi:comment
+text="Dictionary items are accessed by a key that can be a number or a string. Dictionaries can mix sub-types."/>
+
+<esi:assign name="numbers" value="{'0':0, '1':1, '2':2, '3':3}"/>
+
+<esi:assign name="strings" value="{0:'0', 1:'1', 2:'2', 3:'3'}"/>
+
+<esi:choose>
+  <esi:when test="$(HTTP_COOKIE{'i'})">
+    <esi:assign name="page_number" value="$(numbers{$(HTTP_COOKIE{'i'})})"/>
+    <esi:assign name="the_page" value="$(pages{$(page_number) - 1})"/>
+    <esi:choose>
+     <esi:when test="$(page_number) >= 3">
+       <esi:assign name="page_number" value="1"/>
+     </esi:when>
+     <esi:when test="!$(page_number) | $(page_number) <= 0">
+       <esi:assign name="page_number" value="1"/>
+     </esi:when>
+     <esi:otherwise>
+       <esi:assign name="page_number" value="$(page_number) + 1"/>
+     </esi:otherwise>
+    </esi:choose>
+    $add_header('Set-Cookie','i=' + $(strings{$(page_number)}))
+  </esi:when>
+  <esi:otherwise>
+    <esi:assign name="the_page" value="$(pages{0})"/>
+    $add_header('Set-Cookie','i=2')
+   </esi:otherwise>
+</esi:choose>
+
+<esi:vars>
+Cookies: $(HTTP_COOKIE)<br>
+</esi:vars>
+
+<esi:include src="$(the_page)"/>
+
+Refresh the page to view new output.<br>
+
+<esi:include src="footer.html?rp=$(REQUEST_PATH)"/>

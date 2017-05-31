@@ -1,0 +1,25 @@
+<esi:choose>
+  <esi:when test="!$(HTTP_EXPIRES) & !$(HTTP_CACHE_CONTROL) & !$(HTTP_PRAGMA)">
+    $add_header('Expires', $http_time($time()))
+    $add_header('Cache-Control', 'max-age=0, no-cache, no-store')
+    $add_header('Pragma', 'no-cache')
+  </esi:when>
+</esi:choose>
+
+<html>
+<head>
+<esi:vars>
+<META HTTP-EQUIV="Expires" CONTENT="$http_time($time())">
+</esi:vars>
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+</head>
+<body>
+
+This example adds HTTP Expires, Cache-Control and Pragma headers to the response to
+disallow for downstream caches from caching the page and the Expires and Pragma HTTP-EQUIV tags to
+disallow browsers from caching the page.<br>
+
+<esi:include src="footer.html?rp=$(REQUEST_PATH)"/>
+
+</body>
+</html>
