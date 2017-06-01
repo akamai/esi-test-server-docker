@@ -1,0 +1,57 @@
+<html>
+<body>
+<iframe id="AdFrame"></iframe>
+<script  type="text/javascript">
+  function setFrameHtml(text) {
+    var iframe = document.getElementById('AdFrame'),
+      iframedoc = iframe.contentDocument || iframe.contentWindow.document;
+
+  iframedoc.body.innerHTML = text;
+}
+</script>
+<esi:choose>
+  <esi:when test="$(HTTP_USER_AGENT{'version'}) matches '^5\.[0-9]+' | $(HTTP_USER_AGENT{'version'}) matches '^4\.[0-9]+'">
+    <esi:choose>
+      <esi:when test="$(HTTP_USER_AGENT{'browser'}) == 'MSIE'">
+        <esi:assign name="isIE" value="true"/>
+      </esi:when>
+      <esi:when test="$(HTTP_USER_AGENT{'browser'}) == 'MOZILLA'">
+        <esi:assign name="isChrome" value="true"/>
+      </esi:when>
+    </esi:choose>
+  </esi:when>
+</esi:choose>
+
+<esi:try>
+  <esi:attempt>
+      <esi:choose>
+        <esi:when test="$(isIE) == 'true'">
+          <esi:include src="getIFrameAdfromDB.cgi" maxwait="5000"/>
+        </esi:when>
+        <esi:when test="$(isChrome) == 'true'">
+          <esi:include src="getJavaScriptAdfromDB.cgi" maxwait="5000"/>
+        </esi:when>
+        <esi:otherwise>
+          <esi:include src="getHTMLAdfromDB.cgi" maxwait="5000"/>
+        </esi:otherwise>
+      </esi:choose>
+  </esi:attempt>
+  <esi:except>
+    <esi:choose>
+      <esi:when test="$(isIE) == 'true'">
+        <script type="text/javascript">setFrameHtml('Document to show on Internet Explorer');</script>
+      </esi:when>
+      <esi:when test="$(isChrome) == 'true'">
+        <script type="text/javascript">setFrameHtml('Document to show on Chrome/Firefox');</script>
+      </esi:when>
+      <esi:otherwise>
+        <script type="text/javascript">setFrameHtml('Document to show on unidentified browser');</script>
+      </esi:otherwise>
+    </esi:choose>
+  </esi:except>
+</esi:try>
+
+<esi:include src="utils/footer.html?rp=$(REQUEST_PATH)"/>
+
+</body>
+</html>

@@ -1,0 +1,157 @@
+<html>
+<body marginheight="0" marginwidth="0" leftmargin="0" topmargin="0" bgcolor="#FFFFFF" alink="#FF9900">
+
+<table border="0" align="center">
+<tr><td colspan="2"><b>My IP Address: <esi:vars>$(REMOTE_ADDR)</esi:vars></b></td></tr>
+<tr><td colspan="2"><b>My Geographical Information</b></td></tr>
+<tr><td><b>Attribute</b></td><td><b>Value</b></td></tr>
+
+<esi:choose>
+  <esi:when test="$(GEO{'country_code'})">
+    <tr><td align=left>Country Code</td><td align=left>$(GEO{'country_code'})</td></tr>
+  </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(GEO{'region_code'})">
+    <tr><td align=left>Region Code</td><td align=left>$(GEO{'region_code'})</td></tr>
+  </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(GEO{'city'})">
+    <tr><td align=left>City</td><td align=left>$(GEO{'city'})</td></tr>
+  </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(GEO{'dma'})">
+    <tr><td align=left>DMA</td><td align=left>$(GEO{'dma'})</td></tr>
+  </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(GEO{'msa'})">
+    <tr><td align=left>MSA</td><td align=left>$(GEO{'msa'})</td></tr>
+  </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(GEO{'pmsa'})">
+    <tr><td align=left>PMSA</td><td align=left>$(GEO{'pmsa'})</td></tr>
+  </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(GEO{'areacode'})">
+    <tr><td align=left>Areacode</td><td align=left>$(GEO{'areacode'})</td></tr>
+  </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(GEO{'lat'})">
+    <tr><td align=left>Latitude</td><td align=left>$(GEO{'lat'})</td></tr>
+  </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(GEO{'long'})">
+    <tr><td align=left>Longitude</td><td align=left>$(GEO{'long'})</td></tr>
+  </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(GEO{'county'})">
+    <tr><td align=left>County</td><td align=left>$(GEO{'county'})</td></tr>
+  </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(GEO{'fips'})">
+    <tr><td align=left>FIPS</td><td align=left>$(GEO{'fips'})</td></tr>
+  </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(GEO{'timezone'})">
+    <tr><td align=left>Timezone</td><td align=left>$(GEO{'timezone'})</td></tr>
+  </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(GEO{'network'})">
+    <tr><td align=left>Network</td><td align=left>$(GEO{'network'})</td></tr>
+  </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(GEO{'network_type'})">
+    <tr><td align=left>Network Type</td><td align=left> $(GEO{'network_type'})</td></tr>
+  </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(GEO{'throughput'})">
+    <tr><td align=left>Throughput</td><td align=left> $(GEO{'throughput'})</td></tr>
+  </esi:when>
+</esi:choose>
+
+</table>
+<br><br>
+<table border="0" align="center">
+
+<tr><th>Attribute/value pairs</th><th>Meaning</th></tr>
+
+<tr><td colspan="2"><b>Geography</b></td></tr>
+
+<tr><td>country_code</td><td>The country_code value is an ISO-3166, 2 letter code for the
+country where the IP address maps to.</td></tr>
+
+<tr><td>region_code</td><td>The region_code value is an ISO-3166, 2 letter code for the
+state, province, or region where the IP address maps to.</td></tr>
+
+<tr><td>*city</td><td>The city value will be the city (within 50 mile radius) that the
+IP address maps to.</td></tr>
+
+<tr><td>*dma</td><td>The dma value will be a number representing the Designated
+Marketing Area that the IP address maps to.</td></tr>
+
+<tr><td>*msa</td><td>The msa value will be a number representing the Metropolitan
+Statistical Area that the IP address maps to.</td></tr>
+
+<tr><td>*pmsa</td><td>The pmsa value will be a number representing the Primary
+Metropolitan Statistical Area that the IP address maps to.</td></tr>
+
+<tr><td>*areacode</td><td>The areacode value will be the area code that the IP address
+maps to (multiple answers possible)</td></tr>
+
+<tr><td>*lat</td><td>The lat value will be the latitude that the IP address maps to</td></tr>
+
+<tr><td>*long</td><td>The long value will be the longitude that the IP address maps to </td></tr>
+
+<tr><td>*county</td><td>The county value will be the county that the IP address maps to
+(multiple answers possible)</td></tr>
+
+<tr><td>*fips</td><td>The fips value will be the unique county identifier that the IP
+address maps to (multiple answers possible)</td></tr>
+
+<tr><td>*timezone</td><td>The timezone value will be the time zone that the IP address
+maps to</td></tr>
+
+<tr><td colspan="2"><b>Network</b></td></tr>
+
+<tr><td>network</td><td>The network value will be the network that the IP address
+belongs to.</td></tr>
+
+<tr><td>network_type</td><td>The network type value will be the network type that the IP
+address belongs to.</td></tr>
+
+<tr><td>*throughput</td><td>The throughput is the actual measured throughput that the IP
+address maps to.</td></tr>
+</table>
+<br>  * Denotes attributes only available with the EdgeScape Pro service.
+
+<esi:include src="utils/footer.html?rp=$(REQUEST_PATH)"/>
+
+</body>
+</html>
