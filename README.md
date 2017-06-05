@@ -133,7 +133,7 @@ If you issue requests via the ETS port (80 by default), the ESI tags will be pro
 A basic status page implemented using `mod_status` is available at `/server-status` on the sandbox server.
 
 ## Examples
-A set of ESI examples can be access when running the container with defaults at <URL here>.
+A set of ESI examples can be accessed when running the container with defaults at <URL here>.
 
 ## Security
 This software should only be used in restricted environments for testing and development. For security on public or untrusted networks, ensure that your Docker network configuration does not expose ports except to the local machine.
