@@ -1,56 +1,93 @@
 # Akamai ETS Docker Image
 
 ## About
-This container runs the Akamai Edge Side Includes Test Server. The container OS is Ubuntu 14.04
-Trusty Tahr. Configuration is set via environment variables passed via Docker.
+This container runs the Akamai Edge Side Includes Test Server. The container OS is Ubuntu 14.04 Trusty Tahr. Configuration is set via command-line arguments passed via the `docker run` command.
 
-For more information on ESI, please visit https://www.akamai.com/us/en/support/esi.jsp.
-For code samples, see http://esi-examples.akamai.com/.
+For more information on ESI, please visit https://yoursite.example.com/us/en/support/esi.jsp. For code samples, see http://esi-examples.akamai.com/.
 
-## Running
-By default, the servers run on ports 80 (ETS) and 81 (sandbox), with a hostname
-of localhost. Neither GEO nor ESI Debugging are enabled by default.
+By default, the servers run on ports 80 (ETS) and 81 (sandbox), with a hostname of localhost. ESI Debugging is not enabled by default, but Edgescape settings are, with the following defaults:
+```
+georegion    = 246
+country_code = US
+region_code  = CA
+city         = SANJOSE
+dma          = 807
+pmsa         = 7400
+areacode     = 408
+county       = SANTACLARA
+fips         = 06085
+lat          = 37.3353
+long         = -121.8938
+timezone     = PST
+network_type = dialup
+```
 
-Users can add to the basic settings using the `CONFIGURE_EXTRA_OPTS` environment
-variable, or completely override all settings using the `CONFIGURE_OPTS`
-environment variable.
+## Glossary
+* **ESI port** - the port to which ESI-enabled requests should be proxied.
+* **Sandbox/sandbox origin** - an Apache server running within the container that hosts examples by default, but can also be used to mount a local directory of ESI files for quick/easy testing.
+* **Remote origin** - an upstream server for ETS to forward requests to. ESI code contained fetched from this origin will be processed by the ESI test server.
+* **Edgescape** - geographical information about end users. The `--geo` flag can be used to enable/disable this for a given host. ETS uses static mocked data for these values.
 
-### Basic usage
-`docker run -d --net host akamai-ets:latest`
+## Basic usage
+`docker run -p 8080:80 -p 8081:81 akamai-ets:latest`
+* Runs the ESI server and sandbox origin.
+* `-p 8080:80` and `-p 8081:81` forward ports on your local machine to open ports on the docker container. By default, the ESI server listens on port `80` and the sandbox origin listens on port `81`.
+* ESI Debugging is disabled by default.
+* Edgescape is enabled with the defaults documented above.
 
-### Basic usage (ESI Debugging enabled for localhost)
-`docker run -d --net host -e "CONFIGURE_EXTRA_OPTS=--debug localhost"
-akamai-ets:latest`
+### ESI Debugging enabled for localhost
+`docker run -p 8080:80 -p 8081:81 akamai-ets:latest --debug localhost`
+* This will enable ESI debugging for the sandbox origin (defaults to `localhost`).
 
-### Basic usage (remote origin with ESI Debugging enabled)
-`docker run -d --net host -e "CONFIGURE_EXTRA_OPTS=--remote_origin
-www.akamai.com:443 --debug www.akamai.com" akamai-ets:latest`
+### Remote origin with ESI Debugging enabled
+`docker run -d akamai-ets:latest --remote_origin yoursite.example.com:443 --debug yoursite.example.com`
+* This will enable ESI debugging for `yoursite.example.com`.
 
-### Basic usage (remote origin with GEO setting)
-`docker run -d --net host -e "CONFIGURE_EXTRA_OPTS=--remote_origin
-www.akamai.com:443 --geo
-www.akamai.com:www.akamai.com:georegion=246,country_code=US,region_code=CA, \
+### Remote origin with GEO setting
+`docker run -p 8080:80 -p 8081:81 akamai-ets:latest \
+--remote_origin yoursite.example.com:443 \ --geo
+yoursite.example.com:yoursite.example.com:georegion=246,country_code=US,region_code=CA, \
 city=SANJOSE,dma=807,pmsa=7400,areacode=408,county=SANTACLARA,fips=06085, \
-lat=37.3353,long=-121.8938,timezone=PST,network_type=dialup" akamai-ets:latest`
+lat=37.3353,long=-121.8938,timezone=PST,network_type=dialup akamai-ets:latest`
+* This will enable Edgescape for `yoursite.example.com` with the values specified in the corresponding `geo` argument.
 
-### Advanced usage (changing default hostname and ports - note the use of -p)
-`docker run -d -p 8080:8080 -p 8081:8081 -e
-"CONFIGURE_OPTS=--local_hostname=mymachine.corporate.network --ets_port=8080
---sandbox_port=8081" akamai-ets:latest`
+### Multiple remote origins
+`docker run -p 8080:80 -p 8081:81 akamai-ets:latest --remote_origin yoursite1.example.com:443 --remote_origin yoursite2.example.com --debug yoursite1.example.com --geo yoursite2.example.com:off --geo yoursite2.example.com:country_code=CA`
+* This enables ETS to serve two different origins, each of which can have separate `--geo` and `--debug` settings.
 
-Could be accessed using `curl -v -L -H 'Host: mymachine.corporate.network'
-http://localhost:8081/` (Substitute `localhost` with the hostname of the Docker
-host if needed.)
+## Usage Notes
+
+### Viewing usage information from the command line
+To view built-in documentation of all of the command-line arguments, run `docker run akamai-ets:latest -h`.
+
+### Short flags
+For brevity and convenience, each argument has both a long and a short flag. e.g. `--remote_origin` and `-r` are equivalent. Run `docker run akamai-ets:latest -h` for more information.
+
+### Gotchas/limitations
+The `--geo` and `--debug` flags are keyed on `hostname` only, not `hostname:port`, even though `--remote_origin` allows both. The following command will result in an error:
+
+`docker run akamai-ets:latest --remote_origin yoursite.example.com:8888 --debug yoursite.example.com:8888`
+
+The correct form is:
+
+`docker run akamai-ets:latest --remote_origin yoursite.example.com:8888 --debug yoursite.example.com`
+
+## Advanced usage
+
+### Daemonizing to run in background
+Using `docker run`'s `-d` argument (and removing `-t` or `-i`, you can run the ETS container in the background.
+
+e.g. `docker run -d -p 8080:80 -p 8081:81 akamai-ets:latest`
+
+To stop the container, use `docker ps` to obtain the container ID and `docker stop` or `docker kill` to make it exit. 
+
+### Changing default hostname and ports - note the use of -p
+`docker run -p 8080:8080 -p 8081:8081 akamai-ets:latest --local_hostname mymachine.corporate.network --ets_port 8080 --sandbox_port 8081`
+
+The ETS server can now be accessed using `curl -v -L http://localhost:8080/`
 
 ## Networking
-Users have a variety of options for how to expose ports. The simplest is to use
-`--net host`, which will expose the default ports (80 and 81) via the IP of the
-Docker host. See [this
-article](https://www.ctl.io/developers/blog/post/docker-networking-rules/) for
-more information.
-
-If `--net host` doesn't work for you, or you wish to use different ports, try 
-port fowarding, e.g. `-p 80:80 -p 81:81`.
+Users have a variety of options for how to expose ports with Docker. We've chosen to suggest port forwarding due to its compatibility and simplicity. See [this article](https://www.ctl.io/developers/blog/post/docker-networking-rules/) for more information on Docker networking options.
 
 ### Note for Docker for Mac
 Docker for Mac doesn't currently support `--net host`; [you must forward ports](https://docs.docker.com/docker-for-mac/networking/#there-is-no-docker0-bridge-on-macos).
@@ -66,43 +103,37 @@ Docker for Mac doesn't currently support `--net host`; [you must forward ports](
 * `--debug <hostname>` - enable ESI debugging for that hostname
 * `--geo <hostname:settings>` - enable Edgescape for a hostname via mock data
     - Sample GEO flag:
-      `www.akamai.com:georegion=246,country_code=US,region_code=CA,city=SANJOSE,
+      `yoursite.example.com:georegion=246,country_code=US,region_code=CA,city=SANJOSE,
       dma=807,pmsa=7400,areacode=408,county=SANTACLARA,fips=06085,lat=37.3353,
       long=-121.8938,timezone=PST,network_type=dialup`
 
 ## TLS/HTTPS
-The ESI test server doesn't support HTTPS for incoming connections, but remote
-origins using TLS are supported; just add them with port 443, e.g.
-`--remote_origin www.akamai.com:443`.
+The ESI test server doesn't support HTTPS for incoming connections, but remote origins using TLS are supported; just add them with port 443, e.g. `--remote_origin yoursite.example.com:443`.
 
 ## Container as origin
-In some cases, you may want to specify a server running in another container as
-an origin. There are [diverse ways to achieve
-this](https://docs.docker.com/engine/userguide/networking/), but following is
-one example, where a combination of Docker's `--add-host` parameter and the port
-in ETS' `--remote_origin` parameter is used to route the upstream request to
-another container.
-* `docker run -p 8080:8080 -d -v <directory of ESI files>:/public
+In some cases, you may want to specify a server running in another container as an origin. There are [diverse ways to network containers](https://docs.docker.com/engine/userguide/networking/). In the following example, a combination of Docker's `--add-host` parameter and the port in ETS' `--remote_origin` parameter are used to configure an origin hosted by another container.
+* `docker run -d -p 9080:9080 -v <directory of ESI files>:/public
   redsadic/docker-http-server`
-* `docker run -d --net host -e "CONFIGURE_EXTRA_OPTS=--remote_origin
-  test.box:8080" --add-host test.box:<Docker host IP> akamai-ets:latest`
+* `docker run -d -p 8080:80 -p 8081:81 akamai-ets:latest--remote_origin
+  test.box:8080" --add-host test.box:<Docker host IP>`
+
+You can then access ESI pages on that server using `curl -H 'Host: test.box' http://localhost:8080`.
 
 ## Viewing logs and modifying files
-You can shell into the container using `docker exec -ti <container ID> bash`.
-Logs can be found in `/opt/akamai-ets/logs`.
+You can shell into the container using `docker exec -ti <container ID> bash`. Logs can be found in `/opt/akamai-ets/logs`.
+
 ## Mounting a directory of ESI pages
 You can trivially mount HTML files containing ESI tags in the sandbox server as follows:
 
-`docker run -d --net host -v $(pwd)/esi_pages:/opt/akamai-ets/virtual/localhost/docs
-akamai-ets:latest`
+`docker run -p 8080:80 -p 8081:81 -v $(pwd)/esi_pages:/opt/akamai-ets/virtual/localhost/docs akamai-ets:latest`
 
-If you issue requests via the ETS port (80 by default), the ESI tags will be processed. If you want to enable ESI debugging, pass the `--debug localhost` parameter via the `CONFIGURE_EXTRA_OPTS` environment variable. (Substitute `localhost` for the value of the `--local_hostname` parameter if applicable.
+If you issue requests via the ETS port (80 by default), the ESI tags will be processed. If you want to enable ESI debugging, pass the `--debug localhost` argument. (Substitute `localhost` for the value of the `--local_hostname` parameter if applicable.
 
 ## Status page
 A basic status page implemented using `mod_status` is available at `/server-status` on the sandbox server.
 
 ## Security
-This software is not designed for production use, and should not be used in unrestricted environments. For security on public or untrusted networks, ensure that your Docker network configuration does not expose ports except to the local machine.
+This software should only be used in restricted environments for testing and development. For security on public or untrusted networks, ensure that your Docker network configuration does not expose ports except to the local machine.
 
 ## License
 LICENSE AGREEMENT
