@@ -1,0 +1,31 @@
+<html>
+<body>
+
+<esi:choose>
+  <esi:when test="$(HTTP_USER_AGENT{'os'})=='WIN' & $(HTTP_USER_AGENT{'browser'})=='MSIE' & $(HTTP_USER_AGENT{'version'}) matches '^5\.[0-9]+'">
+    <H2>You are using Microsoft Windows and Microsoft Internet Explorer 5</H2>
+  </esi:when>
+  <esi:when test="$(HTTP_USER_AGENT{'os'})=='WIN' & $(HTTP_USER_AGENT{'browser'})=='MSIE' & $(HTTP_USER_AGENT{'version'}) matches '^4\.[0-9]+'">
+    <H2>You are using Microsoft Windows and Microsoft Internet Explorer 4</H2>
+  </esi:when>
+  <esi:when test="$(HTTP_USER_AGENT{'os'})=='WIN' & $(HTTP_USER_AGENT{'browser'})=='MOZILLA'">
+    <H2>You are using Microsoft Windows and Netscape</H2>
+  </esi:when>
+  <esi:when test="$(HTTP_USER_AGENT{'os'})=='MAC' & $(HTTP_USER_AGENT{'browser'})=='MSIE'">
+    <H2>You are using a MacIntosh and Microsoft Internet Explorer</H2>
+  </esi:when>
+  <esi:when test="$(HTTP_USER_AGENT{'os'})=='MAC' & $(HTTP_USER_AGENT{'browser'})=='MOZILLA'">
+    <H2>You are using a MacIntosh and Netscape</H2>
+  </esi:when>
+  <esi:when test="$(HTTP_USER_AGENT{'os'})=='UNIX' & $(HTTP_USER_AGENT{'browser'})=='MOZILLA'">
+    <H2>You are using Unix and Netscape</H2>
+  </esi:when>
+  <esi:otherwise>
+    <H2>I don't know what you're using</H2>
+  </esi:otherwise>
+</esi:choose>
+
+<esi:include src="utils/footer.html?rp=$(REQUEST_PATH)"/>
+
+</body>
+</html>

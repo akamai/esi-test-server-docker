@@ -1,0 +1,23 @@
+<esi:choose>
+  <esi:when test="!$(HTTP_EXPIRES) & !$(HTTP_CACHE_CONTROL)">
+    $add_header('Expires', $http_time($time() + 36000))
+    $add_header('Cache-Control', 'max-age=24h')
+  </esi:when>
+</esi:choose>
+
+<html>
+<head>
+<esi:vars>
+<META HTTP-EQUIV="Expires" CONTENT="$http_time($time() + 36000)">
+</esi:vars>
+</head>
+<body>
+
+This example adds a 24 hour HTTP Expires and Cache-Control headers to the response to
+allow for downstream caches to cache the page and the Expires HTTP-EQUIV tag to
+allow browsers to cache the page.<br>
+
+<esi:include src="utils/footer.html?rp=$(REQUEST_PATH)"/>
+
+</body>
+</html>

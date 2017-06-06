@@ -1,0 +1,17 @@
+<html>
+<body>
+
+<esi:choose>
+  <esi:when test="$(HTTP_COOKIE{'MyCookie'})">
+    <h2>MyCookie: $(HTTP_COOKIE{'MyCookie'})</h2>
+  </esi:when>
+  <esi:otherwise>
+    <h2>Setting a Cookie</h2>
+    $add_header('Set-Cookie', 'MyCookie=SomeValue; expires='+$http_time($time()+36000)+'; path=/;')
+  </esi:otherwise>
+</esi:choose>
+
+<esi:include src="utils/footer.html?rp=$(REQUEST_PATH)"/>
+
+</body>
+</html>

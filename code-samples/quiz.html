@@ -1,0 +1,125 @@
+<!-- Predefined data sets -->
+
+<!-- questions -->
+<esi:assign name="quiz_w">
+['Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
+</esi:assign>
+
+<!-- matching answers -->
+<esi:assign name="quiz_v">
+['Montgomery','Juneau','Phoenix','Little Rock','Sacramento','Denver','Hartford','Dover','Tallahaaaassee','Atlanta','Honolulu','Boise','Springfield','Indianapolis','Des Moines','Topeka','Frankfort','Baton Rouge','Augusta','Annapolis','Boston','Lansing','St. Paul','Jackson','Jefferson City','Helena','Lincoln','Carson City','Concord','Trenton','Santa Fe','Albany','Raleigh','Bismarck','Columbus','Oklahoma City','Salem','Harrisburg','Providence','Columbia','Pierre','Nashville','Austin','Salt Lake City','Montpelier','Richmond','Olympia','Charleston','Madison','Cheyenne']
+</esi:assign>
+
+<!-- string to integer conversion -->
+<esi:assign name="n_d">
+{'0':0,'1':1,'2':2,'3':3,'4':4,'5':5,'6':6,'7':7,'8':8,'9':9,'10':10,'11':11,'12':12,'13':13,'14':14,'15':15,'16':16,'17':17,'18':18,'19':19,'20':20,'21':21,'22':22,'23':23,'24':24,'25':25,'26':26,'27':27,'28':28,'29':29,'30':30,'31':31,'32':32,'33':33,'34':34,'35':35,'36':36,'37':37,'38':38,'39':39,'40':40,'41':41,'42':42,'43':43,'44':44,'45':45,'46':46,'47':47,'48':48,'49':49,'50':50,'51':50}
+</esi:assign>
+
+<!-- choosing random offset--> 
+<esi:assign name="chosen" value="$rand()%$len($(quiz_w))" />
+
+<esi:vars>
+<!-- Count: $(chosen) Word: $(quiz_w{$(chosen)}) Meaning: $(quiz_v{$(chosen)+0}) -->
+<!-- The Word: $(quiz_w{$(chosen)}) @ $(chosen) -->
+</esi:vars>
+
+
+<!-- creating multiple choice answers -->
+<esi:assign name="w1" value="$rand()%$len($(quiz_w))" />
+<esi:assign name="w2" value="$rand()%$len($(quiz_w))" />
+<esi:assign name="w3" value="$rand()%$len($(quiz_w))" />
+<esi:assign name="w4" value="$(chosen)" />
+
+<esi:assign name="choices" >
+[($rand()%$len($(quiz_w))),($rand()%$len($(quiz_w))),($rand()%$len($(quiz_w))),$(chosen)]
+</esi:assign>
+
+<!-- shuffling the answers -->
+<esi:vars>
+<esi:assign name="r1" value="$rand()%4" />
+<esi:assign name="r2" value="$rand()%3" />
+<esi:assign name="r3" value="$rand()%2" />
+<esi:assign name="r4" value="$rand()%1" />
+<esi:assign name="choice1" value="$(quiz_v{$list_delitem($(choices),$(r1))})" />
+<esi:assign name="choice2" value="$(quiz_v{$list_delitem($(choices),$(r2))})" />
+<esi:assign name="choice3" value="$(quiz_v{$list_delitem($(choices),$(r3))})" />
+<esi:assign name="choice4" value="$(quiz_v{$list_delitem($(choices),$(r4))})" />
+
+<!-- Init totals -->
+<esi:choose>
+<esi:when test="!$(QUERY_STRING{total})" >
+  <esi:assign name="total" value="0" />
+  <esi:assign name="score" value="0" />
+</esi:when>
+<esi:otherwise>
+  <esi:assign name="total" value="$(n_d{$(QUERY_STRING{total})})" />
+  <esi:assign name="score" value="$(n_d{$(QUERY_STRING{score})})" />
+</esi:otherwise>
+</esi:choose>
+
+<!-- Get Correct Answer to previous question -->
+<!-- convert value in QS to an integer -->
+<esi:assign name="correct_c" value="$(n_d{$(QUERY_STRING{correct})})" />
+<!-- locate the right answer -->
+<esi:assign name="correct_v" value="$(quiz_v{$(correct_c)})" />
+
+<!-- Evaluate Anser, give feedback -->
+<esi:choose>
+  <!-- is this the first request -->
+  <esi:when test="!$(QUERY_STRING{correct})" >
+     <h1> Welcome!</h1>
+     The quiz consists of ten questions. See if you get them all correct.
+  </esi:when>
+  <esi:when test="$url_decode($(QUERY_STRING{choice}))==$(correct_v)">
+    <h1>Correct!</h1>
+    <esi:assign name="score" value="$(score)+1" />
+    <!-- The capital of $url_decode($(QUERY_STRING{question})) is $(correct_v).-->
+    <BR>You have answered $(score) out of $(total) questions correctly.    
+  </esi:when>
+  <esi:otherwise>
+    <h1>Wrong!</h1>
+    The capital of $url_decode($(QUERY_STRING{question})) is $(correct_v).
+    <BR>You have answered $(score) out of $(total) questions correctly.
+  </esi:otherwise>
+</esi:choose>
+
+
+
+<esi:choose>
+  <!-- check if 10th, final, question -->
+  <esi:when test="$(total)==10">
+     <esi:assign name="percent" value="$(score)*10" />
+     <h1>Congratulations you are done.</h1>
+     You got $(percent)% of answers correct.
+     <esi:choose>
+       <esi:when test="$(score)==10">
+       <h1> You are perfect! </h1>
+       </esi:when>
+     </esi:choose>
+  </esi:when>
+  <esi:otherwise>
+    <esi:assign name="total" value="$(total)+1" />
+
+<form method=get>
+<!-- correct answer, score and total are hidden -->
+<INPUT TYPE=HIDDEN NAME=correct VALUE="$(chosen)">
+<INPUT TYPE=HIDDEN NAME=score VALUE="$(score)" >
+<INPUT TYPE=HIDDEN NAME=total VALUE="$(total)" >
+<INPUT TYPE=HIDDEN NAME=question VALUE="$(quiz_w{$(chosen)})" >
+
+<BR><h2>What is the capital of $(quiz_w{$(chosen)})?</h2>
+
+<INPUT TYPE=radio NAME=choice value="$(choice1)">$(choice1)
+<INPUT TYPE=radio NAME=choice value="$(choice2)">$(choice2)
+<INPUT TYPE=radio NAME=choice value="$(choice3)">$(choice3)
+<INPUT TYPE=radio NAME=choice value="$(choice4)">$(choice4)
+
+<BR><BR><INPUT TYPE=Submit Name="submit" value="Submit">
+</form>
+
+
+
+  </esi:otherwise>
+</esi:choose>
+<BR><BR><BR><esi:include src="utils/footer.html?rp=$(REQUEST_PATH)"/>
+</esi:vars>
