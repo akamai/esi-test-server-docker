@@ -22,7 +22,4 @@ RUN mkdir -p /tmp/akamai-ets && \
 EXPOSE 80
 EXPOSE 81
 
-ENV CONFIGURE_EXTRA_OPTS=""
-ENV CONFIGURE_DEFAULTS="--ets_port=80 --local_hostname=localhost --sandbox_port=81"
-
 ENTRYPOINT ["/tmp/run.sh"]
