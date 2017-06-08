@@ -2,4 +2,5 @@
 set -e
 
 /opt/akamai-ets/bin/ets-cli-config $@
-/opt/akamai-ets/bin/apachectl -D FOREGROUND
+PATH=/opt/akamai-ets/bin:$PATH
+akamai-ets > /tmp/nodejs.log 2>&1
