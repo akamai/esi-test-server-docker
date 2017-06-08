@@ -1,13 +1,12 @@
 # build using make
 FROM ubuntu:trusty
 
-ENV ETS_DIR     /opt/akamai-ets
-ENV NODE_DIR    /usr/src/app/
+ENV ETS_DIR=/opt/akamai-ets \
+    NODE_DIR=/usr/src/app/
 
 LABEL vendor="Akamai Technologies, Inc."
 
-COPY akamai-ets_*.tar.gz /tmp
-COPY run.sh /tmp
+COPY akamai-ets_*.tar.gz run.sh /tmp/
 COPY code-samples /tmp/esi-examples
 
 RUN mkdir -p /tmp/akamai-ets && \
@@ -43,8 +42,6 @@ RUN  unset NODE_ENV && npm cache clean && npm install && \
 
 # end install playground
 
-EXPOSE 80
-EXPOSE 81
-EXPOSE 82
+EXPOSE 80 81 82
 
 ENTRYPOINT ["/tmp/run.sh"]
