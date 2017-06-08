@@ -21,7 +21,9 @@ RUN mkdir -p /tmp/akamai-ets && \
     rm -f /tmp/akamai-ets_*.tar.gz && \
     cd /tmp && apt-get install -y curl && \
     curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - && \
-    apt-get install -y build-essential g++ python nodejs && \
+    apt-get install -y build-essential g++ python nodejs git && \
+    git clone https://github.com/newscorpaus/akamai-ets.git && \
+    cd akamai-ets; git checkout 4d3cf03 && \
     rm -rf /var/lib/apt/lists/* && \
     mkdir -p ${NODE_DIR}
 
