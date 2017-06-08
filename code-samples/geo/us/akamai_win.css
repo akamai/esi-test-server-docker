@@ -1,0 +1,207 @@
+A:link {
+	COLOR: #3399ff; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 10pt; TEXT-DECORATION: none
+}
+A:visited {
+	COLOR: #ff9933; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 10pt; TEXT-DECORATION: none
+}
+A:active {
+	COLOR: #3399ff; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 10pt; TEXT-DECORATION: none
+}
+A.footer:link {
+	COLOR: #000099; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt; TEXT-DECORATION: none
+}
+A.footer:visited {
+	COLOR: #ff9933; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt; TEXT-DECORATION: none
+}
+A.footer:active {
+	COLOR: #000099; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt; TEXT-DECORATION: none
+}
+A.news:link {
+	COLOR: #000000; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt; TEXT-DECORATION: none
+}
+A.news:visited {
+	COLOR: #000000; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt; TEXT-DECORATION: none
+}
+A.news:active {
+	COLOR: #000000; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt; TEXT-DECORATION: none
+}
+A.bluenews:link {
+	COLOR: #000099; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 10pt; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+A.bluenews:visited {
+	COLOR: #000099; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 10pt; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+A.bluenews:active {
+	COLOR: #000099; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 10pt; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+A.more:link {
+	COLOR: #0099cc; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+A.more:visited {
+	COLOR: #0099cc; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+A.more:active {
+	COLOR: #0099cc; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+A.breadcrumb:link {
+	COLOR: #3399ff; FONT-FAMILY: Arial,Helvetica,sans-serif; FONT-SIZE: 8pt; TEXT-DECORATION: none
+}
+A.breadcrumb:visited {
+	COLOR: #3399ff; FONT-FAMILY: Arial,Helvetica,sans-serif; FONT-SIZE: 8pt; TEXT-DECORATION: none
+}
+A.breadcrumb:active {
+	COLOR: #3399ff; FONT-FAMILY: Arial,Helvetica,sans-serif; FONT-SIZE: 8pt; TEXT-DECORATION: none
+}
+A.subnav:link {
+	COLOR: #3399ff; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+A.subnav:visited {
+	COLOR: #3399ff; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+A.subnav:active {
+	COLOR: #3399ff; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+A.subnavMd:link {
+	COLOR: #3399ff; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 10pt; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+A.subnavMd:visited {
+	COLOR: #3399ff; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 10pt; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+A.subnavMd:active {
+	COLOR: #3399ff; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 10pt; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+A.subnavLg:link {
+	COLOR: #3399ff; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 12pt; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+A.subnavLg:visited {
+	COLOR: #3399ff; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 12pt; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+A.subnavLg:active {
+	COLOR: #3399ff; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 12pt; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+A.sitemap:link {
+	COLOR: #7a7a7a; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt; TEXT-DECORATION: none
+}
+A.sitemap:visited {
+	COLOR: #7a7a7a; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt; TEXT-DECORATION: none
+}
+A.sitemap:active {
+	COLOR: #7a7a7a; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt; TEXT-DECORATION: none
+}
+A.sitemapMd:link {
+	COLOR: #0092d2; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 10pt; TEXT-DECORATION: none
+}
+A.sitemapMd:visited {
+	COLOR: #0092d2; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 10pt; TEXT-DECORATION: none
+}
+A.sitemapMd:active {
+	COLOR: #0092d2; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 10pt; TEXT-DECORATION: none
+}
+A.sitemapLg:link {
+	COLOR: #000099; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 10pt; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+A.sitemapLg:visited {
+	COLOR: #000099; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 10pt; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+A.sitemapLg:active {
+	COLOR: #000099; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 10pt; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+A.small:link {
+	COLOR: #3399ff; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt; TEXT-DECORATION: none
+}
+A.small:visited {
+	COLOR: #ff9933; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt; TEXT-DECORATION: none
+}
+A.small:active {
+	COLOR: #3399ff; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt; TEXT-DECORATION: none
+}
+A.smwhite:link {
+	COLOR: #ffffff; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt; TEXT-DECORATION: none
+}
+A.smwhite:visited {
+	COLOR: #ffffff; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt; TEXT-DECORATION: none
+}
+A.smwhite:active {
+	COLOR: #ffffff; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt; TEXT-DECORATION: none
+}
+.inactivesubnav {
+	COLOR: #000000; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt; FONT-WEIGHT: bold
+}
+.smText {
+	COLOR: #000000; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt
+}
+.smArialText {
+	COLOR: #ff9933; FONT-FAMILY: Arial,Helvetica,sans-serif; FONT-SIZE: 8pt
+}
+.smTextOr {
+	COLOR: #ff9933; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt
+}
+.lgTextOr {
+	COLOR: #ff9933; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 12pt
+}
+.lgText {
+	COLOR: #000000; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 12pt
+}
+.smredText {
+	COLOR: #ff0000; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt
+}
+.smwhiteText {
+	COLOR: #ffffff; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt
+}
+.whiteText {
+	COLOR: #ffffff; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 10pt; FONT-WEIGHT: bold
+}
+.lgwhiteText {
+	COLOR: #ffffff; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 12pt; FONT-WEIGHT: bold
+}
+.smblueText {
+	COLOR: #0092d2; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt
+}
+.smdarkblueText {
+	COLOR: #000099; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt
+}
+.subhead {
+	COLOR: #000000; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 10pt; FONT-WEIGHT: bold
+}
+.lgsubhead {
+	COLOR: #000000; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 12pt; FONT-WEIGHT: bold
+}
+.quote {
+	COLOR: #555555; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 10pt
+}
+.smquote {
+	COLOR: #555555; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt
+}
+.smgray {
+	COLOR: #7a7a7a; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 8pt
+}
+.homecopy {
+	COLOR: #000000; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 10pt
+}
+TD {
+	COLOR: #000000; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 10pt
+}
+P {
+	COLOR: #000000; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 10pt
+}
+OL {
+	COLOR: #000000; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 10pt
+}
+UL {
+	COLOR: #000000; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 10pt
+}
+BODY {
+	COLOR: #000000; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 10pt
+}
+.searchresulttext {
+	COLOR: #000000; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 9pt
+}
+A.searchresultlink:link {
+	COLOR: #3399ff; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 9pt; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+A.searchresultlink:visited {
+	COLOR: #ff9933; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 9pt; FONT-WEIGHT: bold; TEXT-DECORATION: none
+}
+A.searchresultlink:active {
+	COLOR: #3399ff; FONT-FAMILY: Verdana,Tahoma,Arial; FONT-SIZE: 9pt; FONT-WEIGHT: bold
+}

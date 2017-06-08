@@ -1,0 +1,9 @@
+<esi:assign name="LINK" value="'http://'+$(HTTP_HOST)+':81'+$(QUERY_STRING{'rp'})+'?plaintext=1'" />
+<esi:choose>
+    <esi:when test="$(HTTP_USER_AGENT{'browser'}) == 'MSIE'">
+        <a href="view-source:$(LINK)">$(QUERY_STRING{'linktext'})</a><br>
+    </esi:when>
+    <esi:otherwise>
+        <a href="$(LINK)">$(QUERY_STRING{'linktext'})</a><br>
+    </esi:otherwise>
+</esi:choose>

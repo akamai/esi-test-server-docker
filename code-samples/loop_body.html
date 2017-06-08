@@ -1,0 +1,12 @@
+<esi:assign name="iter" value="$list_delitem($(check_list), 0)"/>
+
+<esi:vars>
+Symbol: $(iter)<br>
+</esi:vars>
+
+<esi:choose>
+  <esi:when test="$len($(check_list)) > 0">
+    <esi:include src="loop_body.html"/>
+  </esi:when>
+</esi:choose>
+

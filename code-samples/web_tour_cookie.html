@@ -1,0 +1,89 @@
+<esi:comment text="List items are accessed using the position (starting with 0) as the key."/>
+
+<esi:assign name="urls"
+            value="['http://www.apache.org/',
+'https://www.w3schools.com/',
+'http://www.lycos.com/',
+'https://www.ibm.com/',
+'http://www.businessinsider.com/',
+'https://www.nhl.com/',
+'https://whatwg.org/',
+'https://www.mlb.com/',
+'https://www.mlssoccer.com/',
+'https://www.nfl.com/']"/>
+
+<esi:comment text="Dictionary items are accessed by a key that can be a number or a string.
+Dictionaries can mix sub-types."/>
+
+<esi:assign name="numbers"
+value="{'0':0,
+'1':1,
+'2':2,
+'3':3,
+'4':4,
+'5':5,
+'6':6,
+'7':7,
+'8':8,
+'9':9,
+'10':10}"/>
+
+<esi:assign name="strings" value="{0:'0',
+1:'1',
+2:'2',
+3:'3',
+4:'4',
+5:'5',
+6:'6',
+7:'7',
+8:'8',
+9:'9',
+10:'10'}"/>
+
+<esi:choose>
+  <esi:when test="$(HTTP_COOKIE{'i'})">
+    <esi:assign name="url_number" value="$(numbers{$(HTTP_COOKIE{'i'})})"/>
+    <esi:choose>
+      <esi:when test="!$(url_number)">
+        <esi:assign name="url_number" value="1"/>
+      </esi:when>
+    </esi:choose>
+
+    <esi:assign name="urlToDisplay" value="$(urls{$(url_number) - 1})"/>
+    <esi:choose>
+      <esi:when test="!$(urlToDisplay)">
+        <esi:assign name="urlToDisplay" value="$(urls{0})"/>
+      </esi:when>
+    </esi:choose>
+
+    <esi:choose>
+      <esi:when test="$(url_number) < $len($(urls))">
+        <esi:assign name="url_number" value="$(url_number) + 1"/>
+      </esi:when>
+      <esi:otherwise>
+        <esi:assign name="url_number" value="1"/>
+      </esi:otherwise>
+    </esi:choose>
+
+    $add_header('Set-Cookie','i=' + $(strings{$(url_number)}))
+  </esi:when>
+  <esi:otherwise>
+    <esi:assign name="urlToDisplay" value="$(urls{0})"/>
+    $add_header('Set-Cookie','i=2')
+  </esi:otherwise>
+</esi:choose>
+
+<html>
+<head>
+<title>ESI Web Tour</title>
+<esi:vars>
+<meta http-equiv="refresh" content="5; URL=http://$(HTTP_HOST)$(REQUEST_PATH)">
+</esi:vars>
+</head>
+
+<frameset rows="100%,*">
+<esi:vars><frame src="$(urlToDisplay)" name="frame1"></esi:vars>
+<esi:vars><frame src="$(urlToDisplay)" name="frame2"></esi:vars>
+</frameset>
+
+</html>

@@ -1,0 +1,305 @@
+<html>
+<head>
+<title>EdgeSuite 4.2 ESI Examples</title>
+</head>
+<body>
+
+<h2>EdgeSuite 4.2 ESI Examples</h2>
+
+<ul>
+
+  <li><a href="ad.html">Ad Example</a> </li>
+
+  <ul>
+
+    <li>Displays different HTML ad output based upon the users browser type<br></li>
+
+    <li>The browser is detected using the HTTP_USER_AGENT variable</li>
+
+    <li>Attempts to esi:include the HTML for the ad by referencing an ad server</li>
+
+    <li>If the ad server cannot be contacted, a default ad is sent to the browser<br></li>
+
+  </ul>
+
+  <li><a href="geo.html">Geographic Example using EdgeScape</a></li>
+
+  <ul>
+
+    <li>Displays the geographic information associated with the client's IP
+address</li>
+
+    <li>The geographic information for the client's IP address is stored in
+the EdgeScape database and made available through the $(GEO) variable
+  </li>
+
+    <li>Displays only the geographic information that
+   is currently available for the client's IP address</li>
+
+    <li>Includes description of each geographic value available</li>
+
+  </ul>
+
+  <li>
+      <esi:include src="utils/viewsource.html?rp=/esi-examples/country.html&linktext=Country+Home+Page+Example+using+EdgeScape"/>
+</li>
+
+  <ul>
+
+    <li>Based on the country location of the client, loads corresponding
+country home page for the web site.</li>
+
+    <li><b>Note</b>, only the ESI source code is displayed in this example. </li>
+  </ul>
+  <li><a href="geo/index.html">Eliminating a Splash Screen for Geographies Example using EdgeScape</a>&nbsp;
+      <esi:include src="utils/viewsource.html?rp=/esi-examples/geo/index.html&linktext=View+Source+Code"/>
+  </li>
+  <ul>
+    <li>The following ESI example eliminates the need for a splash screen
+that gathers an end-users geographic information and directs them to<br>
+the appropriate page accordingly. Using ESI the spash screen can be eliminated
+as it can use the EdgeScape information in ESI to send the user automatically
+to the appropriate page.</li>
+    <li>End users country code is checked by ESI's $(GEO) variable and if
+it matches US, DE, JP or FR the appropriate country page is returned. If
+none of the country codes checked match, a default page is returned. &nbsp;&nbsp;
+    </li>
+  </ul>
+  <ul>
+
+  </ul>
+
+  <ul>
+
+  </ul>
+
+  <li><a href="ua.html">User Agent Example</a></li>
+
+  <ul>
+
+    <li>Example to show how to use the HTTP_USER_AGENT variable to determine
+   the client's browser type, and OS type<a href="ua.html"></a></li>
+
+  </ul>
+
+  <li><a href="utils/footer.html">Page footer with View ESI Source Example</a></li>
+
+  <ul>
+
+    <li>Dynamically creates the view source link based upon the query string
+   value</li>
+
+    <li>Determines if the page is being called as an esi:included fragment
+   or being referenced directly so you can view the source of the page itself.
+    </li>
+
+  </ul>
+
+
+  <li><a href="today.html">Date Example</a></li>
+
+  <ul>
+
+    <li>Displays a date string using the $strftime() &nbsp; function
+    </li>
+
+  </ul>
+
+  <li>
+      <esi:include src="utils/viewsource.html?rp=/esi-examples/includebydate.html&linktext=Dynamic+Include+URL+using+Date+Example"/>
+  </li>
+
+  <ul>
+
+    <li>The example dynamically builds the esi:include source URL based on&nbsp;
+ the current date.</li>
+
+    <li><b>Note</b>, only the ESI source code is displayed in this example.</li>
+
+  </ul>
+
+  <li><a href="loop.html?sym=AKAM&amp;sym=EMC&amp;sym=MSFT">Loop Example</a></li>
+
+  <ul>
+
+  </ul>
+
+  <ul>
+
+    <li>Displays multiple values of query string with the same name using
+&nbsp; a list, and recursively iterating through the list by using a recursive
+ esi:include</li>
+
+    <li>Note, ESI supports up to five levels of includes </li>
+
+  </ul>
+
+  <li><a href="page_rotation.html">Page Rotation Example (Query String)</a></li>
+
+  <ul>
+
+    <li>Uses a query string parameter to determine which page to esi:include from a list of pages</li>
+
+    <li>Uses a dictionary of numbers as strings to numbers as numbers to create
+the navigation, which requires numeric operators</li>
+
+    <li>Dynamically builds the previous and next links using the $(REQUEST_PATH)
+   variable </li>
+
+  </ul>
+
+  <li><a href="page_rotation_cookie.html">Page Rotation Example (Cookies)</a></li>
+
+  <ul>
+
+    <li>Uses a cookie to determine which page to esi:include from a list of pages</li>
+
+    <li>Uses a dictionary of numbers as strings to numbers as numbers to determine
+which page to display based on numeric operators<br>
+           </li>
+
+    <li>Uses a dictionary of numbers as numbers to numbers as strings to add
+the number as string value to the cookie </li>
+
+    <li>The function $add_header() is used to set the cookie used to determine
+   which page to esi:include<br>
+           </li>
+
+  </ul>
+
+  <li><a href="image_rotation.html">Image Rotation Example</a></li>
+
+  <ul>
+
+    <li><a href="image_rotation.html"></a>Uses a query string parameter to determine which image to display in the HTML image tag from a list of images </li>
+
+    <li>Uses a dictionary of numbers as strings to numbers as numbers to create
+the navigation, which requires numeric operators </li>
+
+    <li>Dynamically builds the previous and next links using the $(REQUEST_PATH)
+   variable <br>
+           </li>
+
+  </ul>
+
+  <li><a href="random-image.html">Randomly Chosen Image Example</a></li>
+
+  <ul>
+    <li>Uses rand() function to randomly display an image picked from a predefined list of images</li>
+  </ul>
+
+  <li><a href="web_tour.html">Web Tour using Query String Example</a>&nbsp;
+      <esi:include src="utils/viewsource.html?rp=/esi-examples/web_tour.html&linktext=(View+Source+Code)"/>
+   </li>
+
+  <ul>
+
+    <li>Uses a query string<a href="page_rotation.html"></a> parameter to
+  determine which URL to display in the HTML frame from a list of URLs</li>
+
+    <li>The browser will automatically refresh the page after five seconds
+  with the query string, which will cause next URL to be displayed in the
+frame<br>
+        </li>
+
+    <li>Dynamically builds the URL to the frame source</li>
+
+  </ul>
+
+  <li><a href="web_tour_cookie.html">Web Tour using Cookie Example</a>&nbsp;
+      <esi:include src="utils/viewsource.html?rp=/esi-examples/web_tour_cookie.html&linktext=(View+Source+Code)"/>
+  </li>
+
+  <ul>
+
+    <li>Uses a cookie to determine which URL to display in the HTML frame from a list of URLs</li>
+
+    <li>The browser will automatically refresh the page after five seconds sending along the cookie, which will cause next URL to be displayed in the frame</li>
+
+    <li>Dynamically builds the URL to the frame source<br></li>
+
+  </ul>
+
+  <ul>
+
+  </ul>
+
+  <li><a href="quotes.html">Quote Navigation Example</a> &nbsp;&nbsp; &nbsp;
+  &nbsp; &nbsp; &nbsp; &nbsp;
+    <ul>
+
+      <li>Uses a query string parameter to determine which humorous quote to include from a list of humorous quotes</li>
+
+      <li>Uses a dictionary of numbers as strings to numbers as numbers to create the navigation, which requires numeric operators</li>
+
+      <li>Dynamically builds the previous and next links using the $(REQUEST_PATH) variable </li>
+
+    </ul>
+         </li>
+
+  <li><a href="setcookie.html">Set Cookie Example</a></li>
+
+  <ul>
+
+    <li>Determines if a cookie is present and if the cookie if present, displays
+   the cookie using $(HTTP_COOKIE) variable</li>
+
+    <li>If the cookie is not present, uses the $set<a href="setcookie.html"></a>
+       _header() function to add a presistent cookie with a 24 hour expiration
+   to the response</li>
+
+  </ul>
+
+  <li><a href="expires.html">Setting Expires and Cache Control Headers for
+   Downstream Caching</a></li>
+
+  <ul>
+
+    <li>Sets a 24 hour HTTP Expires and Cache-Control headers to the response
+   to allow for downstream caches to cache the page and the Expires HTTP-EQUIV
+   tag to allow browsers to cache the page<br>
+          </li>
+
+  </ul>
+
+  <li><a href="expires_now.html">Setting Expires and Cache Control Headers
+   for Downstream Cache Busting</a></li>
+
+  <ul>
+
+    <li>Sets a HTTP Expires, Cache-Control and Pragma headers to the response
+   to disallow for downstream caches from caching the page and the Expires
+ and  Pragma HTTP-EQUIV tags to disallow browsers from caching the page.<a href="expires_now.html"></a></li>
+
+  </ul>
+
+  <ul>
+
+  </ul>
+
+  <li><a href="form1.html">Form Processing Example</a></li>
+
+  <ul>
+
+    <li>Demonstrates how to store state of a multiple page and multiple form submission process</li>
+
+    <li>Uses the $url_decode() function to properly decode the form variables</li>
+
+  </ul>
+
+  <li><a href="quiz.html">Quiz Example</a></li>
+
+  <ul>
+
+    <li>Demonstrates using form processing logic with ESI and other ESI features.</li>
+
+  </ul>
+</ul>
+
+
+<a href="esi-examples.tar.gz">Download ESI Examples</a><br>
+
+<esi:include src="utils/footer.html?rp=$(REQUEST_PATH)"/>
+
+</body>
+</html>

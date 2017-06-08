@@ -1,0 +1,18 @@
+<esi:comment text="determine if page is being called as a fragment or directly to view the page source"/>
+
+<esi:choose>
+  <esi:when test="!$(QUERY_STRING)">
+    <esi:include src="footer.html?rp=$(REQUEST_PATH)"/>
+  </esi:when>
+  <esi:otherwise>
+    <p>
+      <esi:include src="viewsource.html?rp=$(QUERY_STRING{'rp'})&linktext=%5BView+ESI+Source%5D"/>
+    (You may have to view the page source to view the ESI code after clicking on the link)
+    <p>
+    <esi:choose>
+      <esi:when test="$(QUERY_STRING{'rp'}) != '/' & $(QUERY_STRING{'rp'}) != '/index.html'">
+        <a href="index.html">Example Home Page</a><br>
+      </esi:when>
+    </esi:choose>
+  </esi:otherwise>
+</esi:choose>

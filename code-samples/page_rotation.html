@@ -1,0 +1,61 @@
+<esi:comment text="List items are accessed using the position (starting with 0) as the key."/>
+
+<esi:assign name="pages" value="['page1.html', 'page2.html', 'page3.html']"/>
+
+<esi:comment 
+text="Dictionary items are accessed by a key that can be a number or a string. Dictionaries can mix sub-types."/>
+
+<esi:assign name="numbers" value="{'0':0, '1':1, '2':2, '3':3}"/>
+
+<esi:choose>
+  <esi:when test="$(QUERY_STRING{'i'})">
+    <esi:assign name="page_number" value="$(numbers{$(QUERY_STRING{'i'})})"/>
+
+    <esi:choose>
+      <esi:when test="!$(page_number)">
+        <esi:assign name="page_number" value="1"/>    
+      </esi:when>
+    </esi:choose>
+
+    <esi:assign name="the_page" value="$(pages{$(page_number) - 1})"/>    
+
+    <esi:choose>
+      <esi:when test="!$(the_page)">
+        <esi:assign name="the_page" value="$(pages{0})"/>    
+      </esi:when>
+    </esi:choose>
+
+  </esi:when>
+  <esi:otherwise>
+    <esi:assign name="the_page" value="$(pages{0})"/>
+    <esi:assign name="page_number" value="1"/>
+   </esi:otherwise>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(page_number) > 1">
+	<esi:assign name="prev" value="$(page_number) - 1"/>
+  </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(page_number) < $len($(pages))">
+	<esi:assign name="next" value="$(page_number) + 1"/>
+  </esi:when>
+</esi:choose>
+
+<esi:include src="$(the_page)"/>
+
+<esi:choose>
+  <esi:when test="$(prev)">
+    <a href="$(REQUEST_PATH)?i=$(prev)">[Previous]</a>
+  </esi:when>
+</esi:choose>
+
+<esi:choose>
+  <esi:when test="$(next)">
+    <a href="$(REQUEST_PATH)?i=$(next)">[Next]</a>
+  </esi:when>
+</esi:choose>
+
+<esi:include src="footer.html?rp=$(REQUEST_PATH)"/>

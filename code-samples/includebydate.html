@@ -1,0 +1,5 @@
+<esi:comment
+text="The following example dynamically builds the esi:include URL based on the current date.
+An example source URL: /news/2001/08/16/index.html"/>
+
+<esi:include src="/news/$strftime($time(), '%Y/%m/%d')/index.html" alt="/news/index.html"/>

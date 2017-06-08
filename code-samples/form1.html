@@ -1,0 +1,64 @@
+<html>
+<body>
+<esi:choose>
+  <esi:when test="!$(QUERY_STRING)">
+    <FORM name="form1" method="GET" action="form1.html">
+    <INPUT TYPE="TEXT" NAME="textbox"><br>
+    <INPUT checked TYPE="checkbox" name="checkbox"><br>
+    <INPUT checked TYPE="radio" VALUE="Yes" NAME="radio"> 
+    <INPUT TYPE="radio" VALUE="No" NAME="radio"><br> 
+    <SELECT name="select">
+      <OPTION>Item 1</OPTION>
+      <OPTION>Item 2</OPTION>
+      <OPTION>Item 3</OPTION>
+      <OPTION>Item 4</OPTION>
+    </SELECT>
+    <br>
+    <SELECT NAME="multiple" MULTIPLE>
+      <OPTION>Item 1</OPTION>
+      <OPTION>Item 2</OPTION>
+      <OPTION>Item 3</OPTION>
+      <OPTION>Item 4</OPTION>
+    </SELECT>
+    <br>
+    <TEXTAREA name="textarea" wrap="virtual" rows="5" cols="40"></TEXTAREA><br>
+    <INPUT TYPE="submit" VALUE="Continue">  
+    <INPUT TYPE="reset" VALUE="Reset"><br>
+    </FORM>
+  </esi:when>
+  <esi:when test="!$(QUERY_STRING{'textbox2'})">
+    <FORM name="form1" method="GET" action="form1.html">
+    Textbox Value: $url_decode($(QUERY_STRING{'textbox'}))<br>
+    CheckBox Value: $(QUERY_STRING{'checkbox'})<br>
+    Radio Button Value: $url_decode($(QUERY_STRING{'radio'}))<br>
+    Select Value: $url_decode($(QUERY_STRING{'select'}))<br>
+    Multiple Select Values: $url_decode($(QUERY_STRING{'multiple'}))<br>
+    Text Area Value: $url_decode($(QUERY_STRING{'textarea'}))<br><br>
+    <INPUT TYPE="TEXT" NAME="textbox2"><br>
+    <INPUT TYPE="submit" VALUE="Continue">  
+    <INPUT TYPE="reset" VALUE="Reset"><br>
+    <INPUT type="hidden" name="hidden" value="true">  
+    <INPUT type="hidden" name="textbox" value="$url_decode($(QUERY_STRING{'textbox'}))">  
+    <INPUT type="hidden" name="checkbox" value="$(QUERY_STRING{'checkbox'})">  
+    <INPUT type="hidden" name="radio" value="$url_decode($(QUERY_STRING{'radio'}))">  
+    <INPUT type="hidden" name="select" value="$url_decode($(QUERY_STRING{'select'}))">  
+    <INPUT type="hidden" name="multiple" value="$url_decode($(QUERY_STRING{'multiple'}))">  
+    <INPUT type="hidden" name="textarea" value="$url_decode($(QUERY_STRING{'textarea'}))">  
+    </FORM>
+  </esi:when>
+  <esi:otherwise>
+    Textbox Value: $url_decode($(QUERY_STRING{'textbox'}))<br>
+    Textbox2 Value: $url_decode($(QUERY_STRING{'textbox2'}))<br>
+    CheckBox Value: $(QUERY_STRING{'checkbox'})<br>
+    Radio Button Value: $url_decode($(QUERY_STRING{'radio'}))<br>
+    Select Value: $url_decode($(QUERY_STRING{'select'}))<br>
+    Multiple Select Values: $url_decode($(QUERY_STRING{'multiple'}))<br>
+    Text Area Value: $url_decode($(QUERY_STRING{'textarea'}))<br><br>
+    Thank You!<br>
+  </esi:otherwise>
+</esi:choose>
+
+<esi:include src="utils/footer.html?rp=$(REQUEST_PATH)"/>
+
+</body>
+</html>
