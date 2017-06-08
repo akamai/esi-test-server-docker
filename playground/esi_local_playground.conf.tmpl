@@ -1,0 +1,11 @@
+LoadModule macro_module modules/mod_macro.so
+
+IncludeOptional conf/ets/macros/*.macro
+
+Listen 82
+
+Use Playground "preview" "off" "SUBST_GEO_SUBST"
+Use Playground "debug" "on" "SUBST_GEO_SUBST"
+UndefMacro Playground
+
+IncludeOptional conf/ets/vh_*.conf
