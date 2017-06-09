@@ -1,11 +1,15 @@
 # Akamai ETS Docker Image
 
 ## About
-This container runs the Akamai Edge Side Includes Test Server. The container OS is Ubuntu 14.04 Trusty Tahr. Configuration is set via command-line arguments passed via the `docker run` command.
+This container runs the Akamai Edge Side Includes Test Server (ETS).
+
+![ETS schema](ets-diagram.png)
+
+The container OS is Ubuntu 14.04 Trusty Tahr. Configuration is set via command-line arguments passed via the `docker run` command.
 
 For more information on ESI, please visit https://yoursite.example.com/us/en/support/esi.jsp. For code samples, see http://esi-examples.akamai.com/.
 
-By default, the servers run on ports 80 (ETS) and 81 (sandbox), with a hostname of localhost. ESI Debugging is not enabled by default, but Edgescape settings are, with the following defaults:
+By default, the servers run on ports 80 (ETS), 81 (sandbox) and 82 (ESI playground), with a hostname of localhost. ESI Debugging is not enabled by default, but Edgescape settings are, with the following defaults:
 ```
 georegion    = 246
 country_code = US
@@ -29,66 +33,66 @@ network_type = dialup
 * **Edgescape** - geographical information about end users. The `--geo` flag can be used to enable/disable this for a given host. ETS uses static mocked data for these values.
 
 ## Basic usage
-`docker run -t -p 8080:80 -p 8081:81 akamai-ets:latest`
+`docker run -t -p 8080:80 -p 8081:81 -p 8082:82 akamaiesi/ets-docker:latest`
 * Runs the ESI server and sandbox origin.
-* `-p 8080:80` and `-p 8081:81` forward ports on your local machine to open ports on the docker container. By default, the ESI server listens on port `80` and the sandbox origin listens on port `81`.
+* `-p 8080:80` and `-p 8081:81` forward ports on your local machine to open ports on the docker container. By default, the ESI server listens on port `80`, the sandbox origin listens on port `81`, and ESI playground listens on port `82``.
 * ESI Debugging is disabled by default.
 * Edgescape is enabled with the defaults documented above.
 
 ### ESI Debugging enabled for localhost
-`docker run -t -p 8080:80 -p 8081:81 akamai-ets:latest --debug localhost`
+`docker run -t -p 8080:80 -p 8081:81 -p 8082:82 akamaiesi/ets-docker:latest --debug localhost`
 * This will enable ESI debugging for the sandbox origin (defaults to `localhost`).
 
 ### Edgescape disabled for localhost
-`docker run -t -p 8080:80 -p 8081:81 akamai-ets:latest --geo localhost:off`
+`docker run -t -p 8080:80 -p 8081:81 -p 8082:82  akamaiesi/ets-docker:latest --geo localhost:off`
 * This will enable disable Edgescape for the sandbox origin (defaults to `localhost`).
 
 ### Remote origin with ESI Debugging enabled
-`docker run -t akamai-ets:latest --remote_origin yoursite.example.com:443 --debug yoursite.example.com`
+`docker run -t akamaiesi/ets-docker:latest --remote_origin yoursite.example.com:443 --debug yoursite.example.com`
 * This will enable ESI debugging for `yoursite.example.com`.
 
 ### Remote origin with GEO setting
-`docker run -t -p 8080:80 -p 8081:81 akamai-ets:latest \
+`docker run -t -p 8080:80 -p 8081:81 -p 8082:82 akamaiesi/ets-docker:latest \
 --remote_origin yoursite.example.com:443 \ --geo
 yoursite.example.com:yoursite.example.com:georegion=246,country_code=US,region_code=CA, \
 city=SANJOSE,dma=807,pmsa=7400,areacode=408,county=SANTACLARA,fips=06085, \
-lat=37.3353,long=-121.8938,timezone=PST,network_type=dialup akamai-ets:latest`
+lat=37.3353,long=-121.8938,timezone=PST,network_type=dialup akamaiesi/ets-docker:latest`
 * This will enable Edgescape for `yoursite.example.com` with the values specified in the corresponding `geo` argument.
 
 ### Multiple remote origins
-`docker run -t -p 8080:80 -p 8081:81 akamai-ets:latest --remote_origin yoursite1.example.com:443 --remote_origin yoursite2.example.com --debug yoursite1.example.com --geo yoursite2.example.com:off --geo yoursite2.example.com:country_code=CA`
+`docker run -t -p 8080:80 -p 8081:81 -p 8082:82 akamaiesi/ets-docker:latest --remote_origin yoursite1.example.com:443 --remote_origin yoursite2.example.com --debug yoursite1.example.com --geo yoursite2.example.com:off --geo yoursite2.example.com:country_code=CA`
 * This enables ETS to serve two different origins, each of which can have separate `--geo` and `--debug` settings.
 
 ## Usage Notes
 
 ### Viewing usage information from the command line
-To view built-in documentation of all of the command-line arguments, run `docker run akamai-ets:latest -h`.
+To view built-in documentation of all of the command-line arguments, run `docker run akamaiesi/ets-docker:latest -h`.
 
 ### Short flags
-For brevity and convenience, each argument has both a long and a short flag. e.g. `--remote_origin` and `-r` are equivalent. Run `docker run akamai-ets:latest -h` for more information.
+For brevity and convenience, each argument has both a long and a short flag. e.g. `--remote_origin` and `-r` are equivalent. Run `docker run akamaiesi/ets-docker:latest -h` for more information.
 
 ### Gotchas/limitations
 The `--geo` and `--debug` flags are keyed on `hostname` only, not `hostname:port`, even though `--remote_origin` allows both. The following command will result in an error:
 
-`docker run -t akamai-ets:latest --remote_origin yoursite.example.com:8888 --debug yoursite.example.com:8888`
+`docker run -t akamaiesi/ets-docker:latest --remote_origin yoursite.example.com:8888 --debug yoursite.example.com:8888`
 
 The correct form is:
 
-`docker run -t akamai-ets:latest --remote_origin yoursite.example.com:8888 --debug yoursite.example.com`
+`docker run -t akamaiesi/ets-docker:latest --remote_origin yoursite.example.com:8888 --debug yoursite.example.com`
 
 ## Advanced usage
 
 ### Daemonizing to run in background
 Using `docker run`'s `-d` argument (and removing `-t` or `-i`, you can run the ETS container in the background.
 
-e.g. `docker run -d -p 8080:80 -p 8081:81 akamai-ets:latest`
+e.g. `docker run -d -p 8080:80 -p 8081:81 -p 8082:82 akamaiesi/ets-docker:latest`
 
 To stop the container, use `docker ps` to obtain the container ID and `docker stop` or `docker kill` to make it exit. 
 
 ### Changing internal container ports - note the use of -p
 It is unlikely that you will need to make use of this.
 
-`docker run -t -p 9080:8080 -p 9081:8081 akamai-ets:latest --ets_port 8080 --sandbox_port 8081`
+`docker run -t -p 9080:8080 -p 9081:8081 akamaiesi/ets-docker:latest --ets_port 8080 --sandbox_port 8081`
 
 The ETS server can now be accessed using `curl -v -L http://localhost:9080/`.
 
@@ -121,9 +125,9 @@ The ESI test server doesn't support HTTPS for incoming connections, but remote o
 
 ## Container as origin
 In some cases, you may want to specify a server running in another container as an origin. There are [diverse ways to network containers](https://docs.docker.com/engine/userguide/networking/). In the following example, a combination of Docker's `--add-host` parameter and the port in ETS' `--remote_origin` parameter are used to configure an origin hosted by another container.
-* `docker run -d -p 9080:9080 -v <directory of ESI files>:/public
+* `docker run -d -p 9080:9080 -p 8082:82 -v <directory of ESI files>:/public
   redsadic/docker-http-server`
-* `docker run -d -p 8080:80 -p 8081:81 akamai-ets:latest--remote_origin
+* `docker run -d -p 8080:80 -p 8081:81 -p 8082:82 akamaiesi/ets-docker:latest--remote_origin
   test.box:8080" --add-host test.box:<Docker host IP>`
 
 You can then access ESI pages on that server using `curl -H 'Host: test.box' http://localhost:8080`.
@@ -134,15 +138,18 @@ You can shell into the container using `docker exec -ti <container ID> bash`. Lo
 ## Mounting a directory of ESI pages
 You can trivially mount HTML files containing ESI tags in the sandbox server as follows:
 
-`docker run -t -p 8080:80 -p 8081:81 -v $(pwd)/esi_pages:/opt/akamai-ets/virtual/localhost/docs akamai-ets:latest`
+`docker run -t -p 8080:80 -p 8081:81 -p 8082:82 -v $(pwd)/esi_pages:/opt/akamai-ets/virtual/localhost/docs akamaiesi/ets-docker:latest`
 
 If you issue requests via the ETS port (80 by default), the ESI tags will be processed. If you want to enable ESI debugging, pass the `--debug localhost` argument.
 
 ## Status page
 A basic status page implemented using `mod_status` is available at `/server-status` on the sandbox server.
 
+## ESI playground
+ESI playground is a real time, test-as-you-type ESI testing tool, it's available under http://localhost:<playground port>, e.g. http://lcoalhost:8082
+
 ## Examples
-A set of ESI examples can be accessed when running the container with defaults at <URL here>.
+A set of ESI examples can be accessed when running the container with defaults at http://localhost/esi-examples/index.html .
 
 ## Security
 This software should only be used in restricted environments for testing and development. For security on public or untrusted networks, ensure that your Docker network configuration does not expose ports except to the local machine.
@@ -263,3 +270,15 @@ this Software without prior written authorization of the copyright holder.
 
 Your rights under this Agreement will terminate automatically without notice if
 you fail to comply with any term(s) of this Agreement.
+
+Part of the software is under:
+
+The MIT License (MIT)
+
+Copyright (c) 2017 News Corp Australia
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
