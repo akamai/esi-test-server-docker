@@ -22,25 +22,24 @@ RUN mkdir -p /tmp/akamai-ets && \
     cd /tmp && apt-get install -y curl && \
     curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - && \
     apt-get install -y build-essential g++ python nodejs git && \
+#install playground, using code from https://github.com/newscorpaus/akamai-ets/Dockerfile
     git clone https://github.com/newscorpaus/akamai-ets.git && \
     cd akamai-ets; git checkout 4d3cf03 && \
-    rm -rf /var/lib/apt/lists/* && \
-    mkdir -p ${NODE_DIR}
-
-#install playground, using code from https://github.com/newscorpaus/akamai-ets/Dockerfile
+    mkdir -p ${ETS_DIR}/conf/ets/macros/ && cp files/conf/ets/macros/Playground.macro ${ETS_DIR}/conf/ets/macros/ && \
+    cp files/conf/ets/vh_playground.conf ${ETS_DIR}/conf/ets/ && \
+    mkdir -p ${NODE_DIR} && \
+    cp -R ./ ${NODE_DIR} && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR ${NODE_DIR}
 COPY playground/ ${ETS_DIR}/conf/
-COPY akamai-ets/files/conf/ets/macros/Playground.macro ${ETS_DIR}/conf/ets/macros/Playground.macro
-COPY akamai-ets/files/conf/ets/vh_playground.conf ${ETS_DIR}/conf/ets/
-COPY akamai-ets/ ${NODE_DIR}
 
 #build playground.min.js, and copy it to /home/playground
 RUN  unset NODE_ENV && npm cache clean && npm install && \
     npm run build && rm -rf node_modules && \
     cp -R public/* /home/ && \
     npm install && npm link && \
-    apt-get remove -y python g++ build-essential && apt-get autoremove -y
+    apt-get remove -y git python g++ build-essential && apt-get autoremove -y
 
 # end install playground
 
