@@ -12,9 +12,10 @@ module Minitest
     MAX_PORT_WAIT = 5 # seconds
     HOST_HOSTNAME = 'localhost'
     DEFAULT_APACHE_HOST = 'localhost'
+    PLAYGROUND_PORT = 82
 
     def start_containers(esi_int_port, sandbox_int_port, args = nil, wait = true)
-      docker_cmd = "docker run -d -p #{esi_int_port} -p #{sandbox_int_port} " \
+      docker_cmd = "docker run -d -p #{esi_int_port} -p #{sandbox_int_port} -p #{PLAYGROUND_PORT} " \
           "-v #{LOCAL_MOUNT_DIR}:#{REMOTE_MOUNT_DIR} #{IMAGE_NAME} #{args.nil? ? '' : args}"
       puts "Docker run command: #{docker_cmd}"
 
@@ -28,10 +29,12 @@ module Minitest
 
       @esi_port = `docker port #{@container_id} #{esi_int_port}`.scan(/:(\d+)/)[0][0]
       @sandbox_port = `docker port #{@container_id} #{sandbox_int_port}`.scan(/:(\d+)/)[0][0]
+      @playground_port = `docker port #{@container_id} #{PLAYGROUND_PORT}`.scan(/:(\d+)/)[0][0]
 
       return unless wait
       wait_for_port_or_fail(HOST_HOSTNAME, @esi_port)
       wait_for_port_or_fail(HOST_HOSTNAME, @sandbox_port)
+      wait_for_port_or_fail(HOST_HOSTNAME, @playground_port)
     rescue => e
       if `docker inspect -f {{.State.Running}} #{@container_id}`.start_with? 'false'
         puts "Container #{@container_id} wasn't running after " \

@@ -23,6 +23,14 @@ class NoArgsDefaultsTest < Minitest::Test
     assert(response.body.include?('<esi:include src="sample.html"/>'))
   end
 
+  def test_playground_available
+    url = "http://#{HOST_HOSTNAME}:#{@playground_port}"
+    puts "URL: #{url}"
+    response = HTTParty.get(url)
+    assert_equal(200, response.code)
+    assert(response.body.include?('<script>playground();</script>'))
+  end
+
   def test_esi_respects_location_dir_no_trailing_slash
     url = "http://#{HOST_HOSTNAME}:#{@esi_port}/basic"
     puts "URL: #{url}"
