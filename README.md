@@ -1,7 +1,11 @@
 # Akamai ETS Docker Image
 
 ## About
-This container runs the Akamai Edge Side Includes Test Server. The container OS is Ubuntu 14.04 Trusty Tahr. Configuration is set via command-line arguments passed via the `docker run` command.
+This container runs the Akamai Edge Side Includes Test Server (ETS).
+
+![ETS schema](ets-diagram.png)
+
+The container OS is Ubuntu 14.04 Trusty Tahr. Configuration is set via command-line arguments passed via the `docker run` command.
 
 For more information on ESI, please visit https://yoursite.example.com/us/en/support/esi.jsp. For code samples, see http://esi-examples.akamai.com/.
 
