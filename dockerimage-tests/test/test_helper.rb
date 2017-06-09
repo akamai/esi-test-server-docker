@@ -6,7 +6,7 @@ require 'open3'
 
 module Minitest
   class Test
-    IMAGE_NAME = 'akamai-ets:latest'
+    IMAGE_NAME = 'akamaiesi/ets-docker:latest'
     LOCAL_MOUNT_DIR = "#{File.expand_path(File.dirname(__FILE__))}/../html"
     REMOTE_MOUNT_DIR = '/opt/akamai-ets/virtual/localhost/docs'
     MAX_PORT_WAIT = 5 # seconds
