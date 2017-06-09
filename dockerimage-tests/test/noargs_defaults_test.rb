@@ -4,7 +4,7 @@ require './test/test_helper'
 # Tests that the default no-args config works as expected
 class NoArgsDefaultsTest < Minitest::Test
   def setup
-    start_containers(80, 81)
+    start_containers
   end
 
   def test_esi_available
