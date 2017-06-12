@@ -3,7 +3,7 @@ require './test/test_helper'
 
 class DebugUsageTest < Minitest::Test
   def setup
-    start_containers(80, 81, "--debug #{DEFAULT_APACHE_HOST}")
+    start_containers("--debug #{DEFAULT_APACHE_HOST}")
   end
 
   def test_esi_debug_works
