@@ -31,12 +31,12 @@ timezone     = PST
 network_type = dialup
 ```
 
-The ETS services run on the following ports of docker container: 80 (main port), 81 (sandbox),  82 (ESI playground), 83 (ESI processing), with a hostname of `localhost`. But only the main (80) port of the docker image/container need to be exposed to outside, and it should be always mapped (explicitly or implicitly) to `ETS port` on your local machine. Playground is accessible by http://localhost:<ETS port>/playground. If you need direct access to sandbox use http://localhost:<ETS port>/sandbox.
+The ETS services run on the following ports of docker container: 80 (main port), 81 (sandbox),  82 (ESI playground), 83 (ESI processing), with a hostname of `localhost`. But only the main (80) port of the docker image/container need to be exposed to outside, and it should be always mapped (explicitly or implicitly) to **ETS port** on your local machine. Playground is accessible by `http://localhost:<ETS port>/playground`. If you need direct access to sandbox use `http://localhost:<ETS port>/sandbox`.
 
 ## Basic usage
 `docker run -ti -p 8080:80 akamaiesi/ets-docker:latest`
 * Runs the ESI server, sandbox origin and playground.
-* `-p 8080:80` - explicitly map/publish port 8080 (ETS port) on your local machine to the main port 80 on the docker container. So, ETS server will be accessible by `http://localhost:8080/`, ESI playground by http://localhost:8080/playground, and the sandbox origin by http://localhost:8080/sandbox .
+* `-p 8080:80` - explicitly map/publish port 8080 (**ETS port**) on your local machine to the main port 80 on the docker container. So, ETS server will be accessible by `http://localhost:8080/`, ESI playground by `http://localhost:8080/playground`, and the sandbox origin by `http://localhost:8080/sandbox`.
 * ESI Debugging is disabled by default.
 * Edgescape is enabled with the defaults documented above.
 
@@ -91,7 +91,7 @@ e.g. `docker run -d -p 8080:80 akamaiesi/ets-docker:latest`
 To stop the container, use `docker ps` to obtain the container ID and `docker stop` or `docker kill` to make it exit. 
 
 ## Networking
-Users have a variety of options for how to expose ports with Docker. We've chosen to suggest explicit port publishing due to its compatibility and simplicity. See [this article](https://www.ctl.io/developers/blog/post/docker-networking-rules/) for more information on Docker networking options.
+Users have a variety of options for how to expose ports with Docker. We've chosen to suggest explicit port publishing/mapping due to its compatibility and simplicity. See [this article](https://www.ctl.io/developers/blog/post/docker-networking-rules/) for more information on Docker networking options.
 
 ### Note for Docker for Mac
 Docker for Mac doesn't currently support `--net host`; [you must forward ports](https://docs.docker.com/docker-for-mac/networking/#there-is-no-docker0-bridge-on-macos).
@@ -125,7 +125,7 @@ You can trivially mount HTML files containing ESI tags in the sandbox server as 
 
 `docker run -ti -p 8080:80 -v $(pwd)/my_esi_pages:/opt/akamai-ets/virtual/localhost/docs akamaiesi/ets-docker:latest`
 
-If you issue requests via the ETS port, the ESI tags will be processed. If you want to enable ESI debugging, pass the `--debug localhost` argument. If you'd like to still be able to access default ETS server content (main page and ESI examples), mount your local folder as a subfolder, i.e.: `-v $(pwd)/my_esi_pages:/opt/akamai-ets/virtual/localhost/docs/my_esi_pages`, so your pages will be available by http://localhost:<ETS port>/my_esi_pages/
+If you issue requests via the **ETS port**, the ESI tags will be processed. If you want to enable ESI debugging, pass the `--debug localhost` argument. If you'd like to still be able to access default ETS server content (main page and ESI examples), mount your local folder as a subfolder, i.e.: `-v $(pwd)/my_esi_pages:/opt/akamai-ets/virtual/localhost/docs/my_esi_pages`, so your pages will be available by `http://localhost:<ETS port>/my_esi_pages/`
 
 ## Status page
 A basic status page implemented using Apache's `mod_status` is available at `http://localhost:<ETS port>/server-status`.
