@@ -16,7 +16,7 @@ class NoArgsDefaultsTest < Minitest::Test
   end
 
   def test_sandbox_available
-    url = "http://#{HOST_HOSTNAME}:#{@sandbox_port}/basic/"
+    url = "http://#{HOST_HOSTNAME}/sandbox/basic/"
     puts "URL: #{url}"
     response = HTTParty.get(url)
     assert_equal(200, response.code)
@@ -24,7 +24,7 @@ class NoArgsDefaultsTest < Minitest::Test
   end
 
   def test_playground_available
-    url = "http://#{HOST_HOSTNAME}:#{@playground_port}"
+    url = "http://#{HOST_HOSTNAME}/playground"
     puts "URL: #{url}"
     response = HTTParty.get(url)
     assert_equal(200, response.code)

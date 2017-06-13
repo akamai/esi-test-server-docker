@@ -10,7 +10,7 @@ The container OS is Ubuntu 14.04 Trusty Tahr. Configuration is set via command-l
 For more information on ESI, please visit https://www.akamai.com/us/en/support/esi.jsp. For code samples, see http://esi-examples.akamai.com/.
 
 ## Glossary
-* **ETS port** - port on local host/machine to access processed ESI pages.
+* **ETS port** - port on the Docker host/machine to access processed ESI pages.
 * **Sandbox/sandbox origin** - an Apache server running within the container that hosts ESI examples by default, but can also be used to mount a local directory of ESI files for quick/easy testing.
 * **Remote origin** - an upstream server for ETS to forward requests to. ESI code fetched from this origin will be processed by the ESI Test Server.
 * **Playground** - real time, test-as-you-type ESI testing tool.
@@ -31,12 +31,12 @@ timezone     = PST
 network_type = dialup
 ```
 
-The ETS services run on the following ports of docker container: 80 (main port), 81 (sandbox),  82 (ESI playground), 83 (ESI processing), with a hostname of `localhost`. But only the main (80) port of the docker image/container need to be exposed to outside, and it should be always mapped (explicitly or implicitly) to **ETS port** on your local machine. Playground is accessible by `http://localhost:<ETS port>/playground`. If you need direct access to sandbox use `http://localhost:<ETS port>/sandbox`.
+In order to access the ETS server, port 80 on the container must be exposed to the host. The host port which is bound to port 80 on the container is referred to as the **ETS port**. Docs and ESI code samples can be accessed at `http://localhost:<ETS port>/`. The playground can be accessed at `http://localhost:<ETS port>/playground`. Settings for the sandbox origin can be set using the hostname `localhost`. Source code versions of ESI pages hosted on the sandbox origin can be accessed at `http://localhost:<ETS port>/sandbox`.
 
 ## Basic usage
 `docker run -ti -p 8080:80 akamaiesi/ets-docker:latest`
 * Runs the ESI server, sandbox origin and playground.
-* `-p 8080:80` - explicitly map/publish port 8080 (**ETS port**) on your local machine to the main port 80 on the docker container. So, ETS server will be accessible by `http://localhost:8080/`, ESI playground by `http://localhost:8080/playground`, and the sandbox origin by `http://localhost:8080/sandbox`.
+* `-p 8080:80` - explicitly map/publish port 8080 (**ETS port**) on your local machine to port 80 on the Docker container. So, ETS server will be accessible by `http://localhost:8080/`, ESI playground by `http://localhost:8080/playground`, and the sandbox origin by `http://localhost:8080/sandbox`.
 * ESI Debugging is disabled by default.
 * Edgescape is enabled with the defaults documented above.
 
@@ -135,6 +135,9 @@ ESI playground is a real time, test-as-you-type ESI testing tool, it's available
 
 ## ESI code examples
 A set of ESI examples can be accessed at `http://localhost:<ETS port>/esi-examples/index.html`.
+
+## Other ports used by container
+The ETS services run on the following Docker container ports: 81 (sandbox), 82 (ESI playground), 83 (ESI processing for sandbox), with a hostname of `localhost`.
 
 ## ETS docker test automation examples
 An example of how to use the ETS docker image as part of test automation can be found at <Github URL here>/dockerimage-tests.
