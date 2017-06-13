@@ -40,17 +40,17 @@ In order to access the ETS server, port 80 on the container must be exposed to t
 * ESI Debugging is disabled by default.
 * Edgescape is enabled with the defaults documented above.
 
-### ESI Debugging enabled for localhost (it's disabled by default)
+### Enable ESI Debugging for localhost
 `docker run -ti -p 8080:80 akamaiesi/ets-docker:latest --debug localhost`
 * This will enable ESI debugging for the sandbox origin (defaults to `localhost`).
 
-### Edgescape disabled for localhost
+### Disable Edgescape for localhost
 `docker run -ti -p 8080:80 akamaiesi/ets-docker:latest --geo localhost:off`
 * This will disable Edgescape for the sandbox origin (defaults to `localhost`).
 
 ### Remote origin with ESI Debugging enabled
 `docker run -ti -p 8080:80 akamaiesi/ets-docker:latest --remote_origin yoursite.example.com:443 --debug yoursite.example.com`
-* This will enable ESI debugging for remote origin on `yoursite.example.com`. To get processed ESI page from yoursite.example.com, add "Host: yoursite.example.com" header to request for `http://localhost:8080/my_page.html`
+* This will enable ESI debugging for a remote origin on `yoursite.example.com`. To get processed ESI page from yoursite.example.com, add "Host: yoursite.example.com" header to request for `http://localhost:8080/my_page.html`
 
 ### Remote origin with GEO setting
 `docker run -ti -p 8080:80 akamaiesi/ets-docker:latest \
