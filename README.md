@@ -108,7 +108,7 @@ Docker for Mac doesn't currently support `--net host`; [you must forward ports](
       long=-121.8938,timezone=PST,network_type=dialup`
 
 ## TLS/HTTPS
-The ESI test server doesn't support HTTPS for incoming connections, but remote origins using TLS are supported; just add them with port 443, e.g. `--remote_origin yoursite.example.com:443`.
+The ESI test server doesn't support HTTPS for incoming connections, but remote origins using TLS are supported; just add them with port 443, e.g. `--remote_origin yoursite.example.com:443`. ETS will unset Content-Security-Policy response header to ensure that browsers will not upgrade ETS requests to secure/https schema.
 
 ## Container as origin
 In some cases, you may want to specify a server running in another container as an origin. There are [diverse ways to network containers](https://docs.docker.com/engine/userguide/networking/). In the following example, a combination of Docker's `--add-host` parameter and the port in ETS' `--remote_origin` parameter are used to configure an origin hosted by another container.
