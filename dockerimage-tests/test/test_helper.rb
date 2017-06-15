@@ -6,15 +6,16 @@ require 'open3'
 
 module Minitest
   class Test
-    IMAGE_NAME = 'akamai-ets:latest'
+    IMAGE_NAME = 'akamaiesi/ets-docker:latest'
     LOCAL_MOUNT_DIR = "#{File.expand_path(File.dirname(__FILE__))}/../html"
     REMOTE_MOUNT_DIR = '/opt/akamai-ets/virtual/localhost/docs'
     MAX_PORT_WAIT = 5 # seconds
     HOST_HOSTNAME = 'localhost'
     DEFAULT_APACHE_HOST = 'localhost'
+    ESI_PORT = 80
 
-    def start_containers(esi_int_port, sandbox_int_port, args = nil, wait = true)
-      docker_cmd = "docker run -d -p #{esi_int_port} -p #{sandbox_int_port} " \
+    def start_containers(args = nil, wait = true)
+      docker_cmd = "docker run -d -p #{ESI_PORT} " \
           "-v #{LOCAL_MOUNT_DIR}:#{REMOTE_MOUNT_DIR} #{IMAGE_NAME} #{args.nil? ? '' : args}"
       puts "Docker run command: #{docker_cmd}"
 
@@ -26,12 +27,10 @@ module Minitest
       end
       @container_id = stdout_stderr.delete("\n")
 
-      @esi_port = `docker port #{@container_id} #{esi_int_port}`.scan(/:(\d+)/)[0][0]
-      @sandbox_port = `docker port #{@container_id} #{sandbox_int_port}`.scan(/:(\d+)/)[0][0]
+      @esi_port = `docker port #{@container_id} #{ESI_PORT}`.scan(/:(\d+)/)[0][0]
 
       return unless wait
       wait_for_port_or_fail(HOST_HOSTNAME, @esi_port)
-      wait_for_port_or_fail(HOST_HOSTNAME, @sandbox_port)
     rescue => e
       if `docker inspect -f {{.State.Running}} #{@container_id}`.start_with? 'false'
         puts "Container #{@container_id} wasn't running after " \

@@ -43,6 +43,10 @@ RUN  unset NODE_ENV && npm cache clean && npm install && \
 
 # end install playground
 
-EXPOSE 80 81 82
+EXPOSE 80
+
+# no default arguments, but this will allow to pass arguments from "docker run ... ARGS" to "/tmp/run.sh ARGS", otherwise "/bin/bash ARGS" will be called
+# more at https://docs.docker.com/engine/reference/builder/#understand-how-cmd-and-entrypoint-interact
+CMD [""]
 
 ENTRYPOINT ["/tmp/run.sh"]
