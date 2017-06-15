@@ -3,7 +3,7 @@ require './test/test_helper'
 
 class GeoTest < Minitest::Test
   def test_geo_can_be_disabled
-    start_containers(80, 81, "--geo #{DEFAULT_APACHE_HOST}:off")
+    start_containers("--geo #{DEFAULT_APACHE_HOST}:off")
     url = "http://#{HOST_HOSTNAME}:#{@esi_port}/basic/geo.html"
     puts "URL: #{url}"
     response = HTTParty.get(url)

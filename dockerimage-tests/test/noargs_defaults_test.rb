@@ -4,7 +4,7 @@ require './test/test_helper'
 # Tests that the default no-args config works as expected
 class NoArgsDefaultsTest < Minitest::Test
   def setup
-    start_containers(80, 81)
+    start_containers
   end
 
   def test_esi_available
@@ -16,11 +16,19 @@ class NoArgsDefaultsTest < Minitest::Test
   end
 
   def test_sandbox_available
-    url = "http://#{HOST_HOSTNAME}:#{@sandbox_port}/basic/"
+    url = "http://#{HOST_HOSTNAME}:#{@esi_port}/sandbox/basic/"
     puts "URL: #{url}"
     response = HTTParty.get(url)
     assert_equal(200, response.code)
     assert(response.body.include?('<esi:include src="sample.html"/>'))
+  end
+
+  def test_playground_available
+    url = "http://#{HOST_HOSTNAME}:#{@esi_port}/playground"
+    puts "URL: #{url}"
+    response = HTTParty.get(url)
+    assert_equal(200, response.code)
+    assert(response.body.include?('<script>playground();</script>'))
   end
 
   def test_esi_respects_location_dir_no_trailing_slash

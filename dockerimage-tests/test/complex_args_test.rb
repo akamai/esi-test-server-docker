@@ -7,7 +7,7 @@ class ComplexArgsTest < Minitest::Test
       '--remote_origin esi-examples.akamai.com ' \
       '--geo esi-examples.akamai.com:country_code=JP,city=TOKYO ' \
       '--debug www.example.org'
-    start_containers(80, 81, args)
+    start_containers(args)
 
     url = "http://#{HOST_HOSTNAME}:#{@esi_port}"
     puts "URL: #{url}"

@@ -1,6 +1,6 @@
 VERSION := $(shell ls akamai-ets_*.tar.gz | grep -Eo "([[:digit:]]\.?)+")
 REPO = ""
-NAME = akamai-ets
+NAME = akamaiesi/ets-docker
 
 .FORCE:
 
