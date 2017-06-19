@@ -132,7 +132,10 @@ If you issue requests via the **ETS port**, the ESI tags will be processed. If y
 
 `-v $(pwd)/my_esi_pages:/opt/akamai-ets/virtual/localhost/docs/my_esi_pages` 
 
-so your pages will be available by `http://localhost:<ETS port>/my_esi_pages/`
+Your pages will be available by `http://localhost:<ETS port>/my_esi_pages/`
+
+## Disabling sandbox and/or playground
+If sandbox or playground interfere with your code, i.e. you'd like to mount your own directory of ESI pages that have `sandbox`, `server-status` folders (used at sandbox), or `playground`, `assets`, `process` folders (used by playground), then you have option to disable sandbox by `--disable_sandbox` option, and playground by `--disable_playground` option. Your pages will be accessible by e.g. http://localhost:<ETS port>/playground
 
 ## Status page
 A basic status page implemented using Apache's `mod_status` module is available at `http://localhost:<ETS port>/server-status`.
