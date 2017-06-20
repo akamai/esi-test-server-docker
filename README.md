@@ -135,7 +135,7 @@ If you issue requests via the **ETS port**, the ESI tags will be processed. If y
 Your pages will be available at `http://localhost:<ETS port>/my_esi_pages/`
 
 ## Disabling sandbox and/or playground
-If the sandbox or playground interfere with your code, i.e. you'd like to mount your own directory of ESI pages that have `sandbox`, `server-status` folders (used at sandbox), or `playground`, `assets`, `process` folders (used by playground), then you have option to disable sandbox by `--disable_sandbox` option, and playground by `--disable_playground` option, e.g:
+If the sandbox or playground interfere with your code, i.e. you'd like to mount your own directory of ESI pages that have `sandbox`, `server-status` folders (used by the sandbox), or `playground`, `assets`, `process` folders (used by the playground), then you can disable the sandbox with `--disable_sandbox` option, and the playground with `--disable_playground`. For example:
 
 `docker run -ti -p 8080:80 -v $(pwd)/my_esi_pages:/opt/akamai-ets/virtual/localhost/docs akamaiesi/ets-docker:latest --disable_playground`
 
