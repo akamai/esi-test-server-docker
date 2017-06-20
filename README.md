@@ -67,7 +67,9 @@ lat=37.3353,long=-121.8938,timezone=PST,network_type=dialup akamaiesi/ets-docker
 ## Usage Notes
 
 ### Viewing usage information from the command line
-To view built-in documentation of all of the command-line arguments, run `docker run akamaiesi/ets-docker:latest -h`.
+To view built-in documentation of all of the command-line arguments, run:
+
+`docker run akamaiesi/ets-docker:latest -h`.
 
 ### Short flags
 For brevity and convenience, each argument has both a long and a short flag. e.g. `--remote_origin` and `-r` are equivalent. Run `docker run akamaiesi/ets-docker:latest -h` for more information.
@@ -84,9 +86,9 @@ The correct form is:
 ## Advanced usage
 
 ### Daemonizing to run in background
-Using `docker run`'s `-d` argument (and removing `-t` or `-i`), you can run the ETS container in the background.
+Using `docker run`'s `-d` argument (and removing `-t` or `-i`), you can run the ETS container in the background, e.g:
 
-e.g. `docker run -d -p 8080:80 akamaiesi/ets-docker:latest`
+`docker run -d -p 8080:80 akamaiesi/ets-docker:latest`
 
 To stop the container, use `docker ps` to obtain the container ID and `docker stop` or `docker kill` to make it exit. 
 
@@ -94,7 +96,7 @@ To stop the container, use `docker ps` to obtain the container ID and `docker st
 Users have a variety of options for how to expose ports with Docker. We've chosen to suggest explicit port publishing/mapping due to its compatibility and simplicity. See [this article](https://www.ctl.io/developers/blog/post/docker-networking-rules/) for more information on Docker networking options.
 
 ### Note for Docker for Mac
-Docker for Mac doesn't currently support `--net host`; [you must forward ports](https://docs.docker.com/docker-for-mac/networking/#there-is-no-docker0-bridge-on-macos).
+Docker for Mac doesn't currently support `--net host` ; [you must forward ports](https://docs.docker.com/docker-for-mac/networking/#there-is-no-docker0-bridge-on-macos).
 
 ## Configuration Settings
 ### Primary
@@ -103,15 +105,16 @@ Docker for Mac doesn't currently support `--net host`; [you must forward ports](
 * `--debug <hostname>` - enable ESI debugging for that hostname
 * `--geo <hostname:settings>` - enable Edgescape for a hostname via mock data
     - Sample GEO flag:
-      `yoursite.example.com:georegion=246,country_code=US,region_code=CA,city=SANJOSE,
+    
+      `--geo yoursite.example.com:georegion=246,country_code=US,region_code=CA,city=SANJOSE,
       dma=807,pmsa=7400,areacode=408,county=SANTACLARA,fips=06085,lat=37.3353,
       long=-121.8938,timezone=PST,network_type=dialup`
 
 ## TLS/HTTPS
-The ESI test server doesn't support HTTPS for incoming connections, but remote origins using TLS are supported; just add them with port 443, e.g. `--remote_origin yoursite.example.com:443`. ETS will unset Content-Security-Policy response header to ensure that browsers will not upgrade ETS requests to secure/https schema.
+The ESI test server doesn't support HTTPS for incoming connections, but remote origins using TLS are supported; just add them with port 443, e.g. `--remote_origin yoursite.example.com:443`. ETS will unset `Content-Security-Policy` response header to ensure that browsers will not upgrade ETS requests to secure/https schema.
 
 ## Container as origin
-In some cases, you may want to specify a server running in another container as an origin. There are [diverse ways to network containers](https://docs.docker.com/engine/userguide/networking/). In the following example, a combination of Docker's `--add-host` parameter and the port in ETS' `--remote_origin` parameter are used to configure an origin hosted by another container.
+In some cases, you may want to specify a server running in another container as an origin. There are [diverse ways to network containers](https://docs.docker.com/engine/userguide/networking/). In the following example, a combination of Docker's `--add-host` parameter and the port in ETS' `--remote_origin` parameter are used to configure an origin hosted by another container, e.g.:
 * `docker run -d -p 9080:9080 -v <directory of ESI files>:/public redsadic/docker-http-server`
 * `docker run -d -p 8080:80 --add-host test.box:<Docker host IP> akamaiesi/ets-docker:latest --remote_origin test.box:9080 `
 
@@ -125,10 +128,21 @@ You can trivially mount HTML files containing ESI tags in the sandbox server as 
 
 `docker run -ti -p 8080:80 -v $(pwd)/my_esi_pages:/opt/akamai-ets/virtual/localhost/docs akamaiesi/ets-docker:latest`
 
-If you issue requests via the **ETS port**, the ESI tags will be processed. If you want to enable ESI debugging, pass the `--debug localhost` argument. If you'd like to still be able to access default ETS server content (main page and ESI examples), mount your local folder as a subfolder, i.e.: `-v $(pwd)/my_esi_pages:/opt/akamai-ets/virtual/localhost/docs/my_esi_pages`, so your pages will be available by `http://localhost:<ETS port>/my_esi_pages/`
+If you issue requests via the **ETS port**, the ESI tags will be processed. If you want to enable ESI debugging, pass the `--debug localhost` argument. If you'd like to still be able to access default ETS server content (main page and ESI examples), mount your local folder as a subfolder, i.e.:
+
+`-v $(pwd)/my_esi_pages:/opt/akamai-ets/virtual/localhost/docs/my_esi_pages` 
+
+Your pages will be available at `http://localhost:<ETS port>/my_esi_pages/`
+
+## Disabling sandbox and/or playground
+If the sandbox or playground interfere with your code, i.e. you'd like to mount your own directory of ESI pages that have `sandbox`, `server-status` folders (used by the sandbox), or `playground`, `assets`, `process` folders (used by the playground), then you can disable the sandbox with `--disable_sandbox` option, and the playground with `--disable_playground`. For example:
+
+`docker run -ti -p 8080:80 -v $(pwd)/my_esi_pages:/opt/akamai-ets/virtual/localhost/docs akamaiesi/ets-docker:latest --disable_playground`
+
+Your pages at `/my_esi_pages/playground` will be accessible at `http://localhost:<ETS port>/playground`
 
 ## Status page
-A basic status page implemented using Apache's `mod_status` is available at `http://localhost:<ETS port>/server-status`.
+A basic status page implemented using Apache's `mod_status` module is available at `http://localhost:<ETS port>/server-status`.
 
 ## ESI playground
 ESI playground is a real time, test-as-you-type ESI testing tool, it's available at `http://localhost:<ETS port>/playground`.
