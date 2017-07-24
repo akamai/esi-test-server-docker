@@ -167,6 +167,6 @@ TODO: these need proper permalinks and an Akamai agreement posted here: https://
 
 Licenses for the products installed within the image:
 * Apache HTTP Server: [Apache License 2.0](https://git.source.akamai.com/projects/WEEPERF/repos/esi-test-server-dockerimage/browse/licenses/Apache.md?at=refs%2Fheads%2Ffixes%2FlicenseUpdate)
-* Akamai ESI Test Server: [Akamai License Agreement](https://git.source.akamai.com/projects/WEEPERF/repos/esi-test-server-dockerimage/browse/licenses/Akamai.md?at=refs%2Fheads%2Ffixes%2FlicenseUpdate)
-* libcurl: [MIT License](https://git.source.akamai.com/projects/WEEPERF/repos/esi-test-server-dockerimage/browse/licenses/Curl.md?at=refs%2Fheads%2Ffixes%2FlicenseUpdate)
-* ESI Playground: [MIT License](https://git.source.akamai.com/projects/WEEPERF/repos/esi-test-server-dockerimage/browse/licenses/NewsCorpAustralia.md?at=refs%2Fheads%2Ffixes%2FlicenseUpdate)
+* Akamai ESI Test Server: Copyright 2017 Akamai Technologies, Inc. [Akamai License Agreement](https://git.source.akamai.com/projects/WEEPERF/repos/esi-test-server-dockerimage/browse/licenses/Akamai.md?at=refs%2Fheads%2Ffixes%2FlicenseUpdate)
+* libcurl: Copyright (c) 1996 - 2017, Daniel Stenberg, daniel@haxx.se, and many contributors, see the THANKS file. [MIT License](https://git.source.akamai.com/projects/WEEPERF/repos/esi-test-server-dockerimage/browse/licenses/Curl.md?at=refs%2Fheads%2Ffixes%2FlicenseUpdate)
+* ESI Playground: Copyright (c) 2017 News Corp Australia [MIT License](https://git.source.akamai.com/projects/WEEPERF/repos/esi-test-server-dockerimage/browse/licenses/NewsCorpAustralia.md?at=refs%2Fheads%2Ffixes%2FlicenseUpdate)
