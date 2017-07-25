@@ -29,7 +29,7 @@ build: .FORCE  ## Build the docker image
 	docker build -f Dockerfile -t ${NAME}:${VERSION} -t ${NAME}:latest --no-cache .
 
 test: 
-	pushd dockerimage-tests && bundle install && rake && popd
+	pushd dockerimage-tests && gem install bundler && bundle install && rake && popd
 
 dist: build
 	docker save ${NAME} -o ${NAME}.${VERSION}.dockerimage.tar
