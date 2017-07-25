@@ -13,6 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Ensure pushd works
+SHELL := /bin/bash
+
 VERSION := $(shell ls akamai-ets_*.tar.gz | grep -Eo "([[:digit:]]\.?)+")
 REPO = ""
 NAME = akamaiesi/ets-docker
