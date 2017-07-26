@@ -163,8 +163,6 @@ This software should only be used in restricted environments for testing and dev
 
 The Dockerfile and associated code samples and scripts are licensed under the Apache License 2.0.
 
-TODO: these need proper permalinks and an Akamai agreement posted here: https://www.akamai.com/us/en/privacy-policies/product-license-agreements/
-
 Licenses for the products installed within the image:
 * Apache HTTP Server: [Apache License 2.0](https://git.source.akamai.com/projects/WEEPERF/repos/esi-test-server-dockerimage/browse/licenses/Apache.md?at=refs%2Fheads%2Ffixes%2FlicenseUpdate)
 * Akamai ESI Test Server: Copyright 2017 Akamai Technologies, Inc. [Akamai License Agreement](https://git.source.akamai.com/projects/WEEPERF/repos/esi-test-server-dockerimage/browse/licenses/Akamai.md?at=refs%2Fheads%2Ffixes%2FlicenseUpdate)
