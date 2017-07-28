@@ -23,6 +23,7 @@ LABEL vendor="Akamai Technologies, Inc."
 
 COPY akamai-ets_*.tar.gz run.sh /tmp/
 COPY code-samples /tmp/esi-examples
+COPY playground/. /tmp/playground/
 
 RUN mkdir -p /tmp/akamai-ets && \
     tar -zxf /tmp/akamai-ets_*.tar.gz -C /tmp/akamai-ets --strip-components=1 && \
@@ -37,26 +38,25 @@ RUN mkdir -p /tmp/akamai-ets && \
     cd /tmp && apt-get install -y curl && \
     curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - && \
     apt-get install -y build-essential g++ python nodejs git && \
-#install playground, using code from https://github.com/newscorpaus/akamai-ets/Dockerfile
+    # install playground, using code from https://github.com/newscorpaus/akamai-ets/Dockerfile
+    cd /tmp && \
     git clone https://github.com/newscorpaus/akamai-ets.git && \
     cd akamai-ets; git checkout 4d3cf03 && \
     mkdir -p ${ETS_DIR}/conf/ets/macros/ && cp files/conf/ets/macros/Playground.macro ${ETS_DIR}/conf/ets/macros/ && \
     cp files/conf/ets/vh_playground.conf ${ETS_DIR}/conf/ets/ && \
+    cp -R /tmp/playground/. ${ETS_DIR}/conf/ && \
     mkdir -p ${NODE_DIR} && \
     cp -R ./ ${NODE_DIR} && \
-    rm -rf /var/lib/apt/lists/*
-
-WORKDIR ${NODE_DIR}
-COPY playground/ ${ETS_DIR}/conf/
-
-#build playground.min.js, and copy it to /home/playground
-RUN  unset NODE_ENV && npm cache clean && npm install && \
+    cd ${NODE_DIR} && \
+    # build playground.min.js, and copy it to /home/playground
+    unset NODE_ENV && npm cache clean && npm install && \
     npm run build && rm -rf node_modules && \
     cp -R public/* /home/ && \
-    npm install && npm link && \
-    apt-get remove -y git python g++ build-essential && apt-get autoremove -y
-
-# end install playground
+    npm install --production && npm link && \
+    rm -rf /tmp/akamai-ets && \
+    # end install playground
+    apt-get remove -y git python g++ build-essential && apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/*
 
 EXPOSE 80
 
