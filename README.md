@@ -35,7 +35,7 @@ In order to access the ETS server, port 80 on the container must be exposed to t
 
 ## Basic usage
 `docker run -ti -p 8080:80 akamaiesi/ets-docker:latest`
-* Runs the ESI server, sandbox origin and playground.
+* Runs the ESI server, sandbox origin, and playground.
 * `-p 8080:80` - explicitly map/publish port 8080 (**ETS port**) on your local machine to port 80 on the Docker container. So, ETS server will be accessible by `http://localhost:8080/`, ESI playground by `http://localhost:8080/playground`, and the sandbox origin by `http://localhost:8080/sandbox`.
 * ESI Debugging is disabled by default.
 * Edgescape is enabled with the defaults documented above.
@@ -96,7 +96,7 @@ To stop the container, use `docker ps` to obtain the container ID and `docker st
 Users have a variety of options for how to expose ports with Docker. We've chosen to suggest explicit port publishing/mapping due to its compatibility and simplicity. See [this article](https://www.ctl.io/developers/blog/post/docker-networking-rules/) for more information on Docker networking options.
 
 ### Note for Docker for Mac
-Docker for Mac doesn't currently support `--net host` ; [you must forward ports](https://docs.docker.com/docker-for-mac/networking/#there-is-no-docker0-bridge-on-macos).
+Docker for Mac doesn't currently support `--net host`; [you must forward ports](https://docs.docker.com/docker-for-mac/networking/#there-is-no-docker0-bridge-on-macos).
 
 ## Configuration Settings
 ### Primary
@@ -111,7 +111,7 @@ Docker for Mac doesn't currently support `--net host` ; [you must forward ports]
       long=-121.8938,timezone=PST,network_type=dialup`
 
 ## TLS/HTTPS
-The ESI test server doesn't support HTTPS for incoming connections, but remote origins using TLS are supported; just add them with port 443, e.g. `--remote_origin yoursite.example.com:443`. ETS will unset `Content-Security-Policy` response header to ensure that browsers will not upgrade ETS requests to secure/https schema.
+The ESI test server doesn't support HTTPS for incoming connections, but remote origins using TLS are supported; just add them with port 443, e.g. `--remote_origin yoursite.example.com:443`. ETS will unset the `Content-Security-Policy` response header to ensure that browsers will not upgrade ETS requests to a secure/HTTPS schema.
 
 ## Container as origin
 In some cases, you may want to specify a server running in another container as an origin. There are [diverse ways to network containers](https://docs.docker.com/engine/userguide/networking/). In the following example, a combination of Docker's `--add-host` parameter and the port in ETS' `--remote_origin` parameter are used to configure an origin hosted by another container, e.g.:
