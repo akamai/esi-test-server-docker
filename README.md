@@ -164,7 +164,7 @@ This software should only be used in restricted environments for testing and dev
 The Dockerfile and associated code samples and scripts are licensed under the Apache License 2.0.
 
 Licenses for the products installed within the image:
-* Apache HTTP Server: [Apache License 2.0](https://git.source.akamai.com/projects/WEEPERF/repos/esi-test-server-dockerimage/browse/licenses/Apache.md?at=refs%2Fheads%2Ffixes%2FlicenseUpdate)
-* Akamai ESI Test Server: Copyright 2017 Akamai Technologies, Inc. [Akamai License Agreement](https://git.source.akamai.com/projects/WEEPERF/repos/esi-test-server-dockerimage/browse/licenses/Akamai.md?at=refs%2Fheads%2Ffixes%2FlicenseUpdate)
-* libcurl: Copyright (c) 1996 - 2017, Daniel Stenberg, daniel@haxx.se, and many contributors, see the THANKS file. [MIT License](https://git.source.akamai.com/projects/WEEPERF/repos/esi-test-server-dockerimage/browse/licenses/Curl.md?at=refs%2Fheads%2Ffixes%2FlicenseUpdate)
-* ESI Playground: Copyright (c) 2017 News Corp Australia [MIT License](https://git.source.akamai.com/projects/WEEPERF/repos/esi-test-server-dockerimage/browse/licenses/NewsCorpAustralia.md?at=refs%2Fheads%2Ffixes%2FlicenseUpdate)
+* Apache HTTP Server: [Apache License 2.0](https://bitbucket.org/sjoulanov/ets-docker/src/426187ab581a78c43307b76e3511f314d43501e8/licenses/Apache.md?at=master&fileviewer=file-view-default)
+* Akamai ESI Test Server: Copyright 2017 Akamai Technologies, Inc. [Akamai License Agreement](https://bitbucket.org/sjoulanov/ets-docker/src/426187ab581a78c43307b76e3511f314d43501e8/licenses/Akamai.md?at=master&fileviewer=file-view-default)
+* libcurl: Copyright (c) 1996 - 2017, Daniel Stenberg, daniel@haxx.se, and many contributors, see the THANKS file. [MIT License](https://bitbucket.org/sjoulanov/ets-docker/src/426187ab581a78c43307b76e3511f314d43501e8/licenses/Curl.md?at=master&fileviewer=file-view-default)
+* ESI Playground: Copyright (c) 2017 News Corp Australia [MIT License](https://bitbucket.org/sjoulanov/ets-docker/src/426187ab581a78c43307b76e3511f314d43501e8/licenses/NewsCorpAustralia.md?at=master&fileviewer=file-view-default)
