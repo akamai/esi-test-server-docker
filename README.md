@@ -154,7 +154,7 @@ A set of ESI examples can be accessed at `http://localhost:<ETS port>/esi-exampl
 The ETS services run on the following Docker container ports: 81 (sandbox), 82 (ESI playground), 83 (ESI processing for sandbox), with a hostname of `localhost`.
 
 ## ETS docker test automation examples
-An example of how to use the ETS docker image as part of test automation can be found at <Github URL here>/dockerimage-tests.
+An example of how to use the ETS docker image as part of test automation can be found in Git [here](https://bitbucket.org/sjoulanov/ets-docker/src/04afe1290cd5a516fe883e647dc64335537ecca6/dockerimage-tests?at=master).
 
 ## Security
 This software should only be used in restricted environments for testing and development. For security on public or untrusted networks, ensure that your Docker network configuration does not expose ports except to the local machine.
