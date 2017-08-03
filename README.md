@@ -3,7 +3,7 @@
 ## About
 This container runs the Akamai Edge Side Includes Test Server (ETS).
 
-![ETS diagram](https://bytebucket.org/sjoulanov/ets-docker/raw/329c71b69a34bb9757e79cbf841418d3191b8d67/ets-diagram.png?token=54a319b762a6bae7338462f5ddb8e983dbad1e4e)
+![ETS diagram](https://raw.githubusercontent.com/akamai/esi-test-server-docker/master/ets-diagram.png)
 
 The container OS is Ubuntu 14.04 Trusty Tahr. Configuration is set via command-line arguments passed via the `docker run` command.
 
@@ -154,7 +154,7 @@ A set of ESI examples can be accessed at `http://localhost:<ETS port>/esi-exampl
 The ETS services run on the following Docker container ports: 81 (sandbox), 82 (ESI playground), 83 (ESI processing for sandbox), with a hostname of `localhost`.
 
 ## ETS docker test automation examples
-An example of how to use the ETS docker image as part of test automation can be found in Git [here](https://bitbucket.org/sjoulanov/ets-docker/src/04afe1290cd5a516fe883e647dc64335537ecca6/dockerimage-tests?at=master).
+An example of how to use the ETS docker image as part of test automation can be found in Git [here](https://github.com/akamai/esi-test-server-docker/tree/master/dockerimage-tests).
 
 ## Security
 This software should only be used in restricted environments for testing and development. For security on public or untrusted networks, ensure that your Docker network configuration does not expose ports except to the local machine.
