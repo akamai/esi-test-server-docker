@@ -115,7 +115,7 @@ The ESI test server doesn't support HTTPS for incoming connections, but remote o
 
 ## Container as origin
 In some cases, you may want to specify a server running in another container as an origin. There are [diverse ways to network containers](https://docs.docker.com/engine/userguide/networking/). In the following example, a combination of Docker's `--add-host` parameter and the port in ETS' `--remote_origin` parameter are used to configure an origin hosted by another container, e.g.:
-* `docker run -d -p 9080:9080 -v <directory of ESI files>:/public redsadic/docker-http-server`
+* `docker run -d -p 9080:8080 -v <directory of ESI files>:/public redsadic/docker-http-server`
 * `docker run -d -p 8080:80 --add-host test.box:<Docker host IP> akamaiesi/ets-docker:latest --remote_origin test.box:9080 `
 
 You can then access ESI pages on that server using `curl -H 'Host: test.box' http://localhost:8080`.
