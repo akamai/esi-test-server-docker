@@ -1,7 +1,7 @@
 # Akamai ETS Docker Image
 
 ## About
-This container runs the Akamai Edge Side Includes Test Server (ETS).
+This container runs the Akamai Edge Side Includes (ESI) Test Server.
 
 ![ETS diagram](https://raw.githubusercontent.com/akamai/esi-test-server-docker/master/ets-diagram.png)
 
@@ -11,10 +11,10 @@ For more information on ESI, please visit https://www.akamai.com/us/en/support/e
 
 ## Glossary
 * **ETS port** - port on the Docker host/machine to access processed ESI pages.
-* **Sandbox/sandbox origin** - an Apache server running within the container that hosts ESI examples by default, but can also be used to mount a local directory of ESI files for quick/easy testing.
+* **Sandbox origin** (or sandbox) - an Apache server running within the container that hosts ESI examples by default, but can also be used to mount a local directory of ESI files for quick and easy testing.
 * **Remote origin** - an upstream server for ETS to forward requests to. ESI code fetched from this origin will be processed by the ESI Test Server.
-* **Playground** - real time, test-as-you-type ESI testing tool.
-* **Edgescape** - geographical information about end users. The `--geo` flag can be used to enable/disable this for a given host (it's enabled by default). ETS uses static mocked data for these values with the following defaults:
+* **Playground** - real-time, test-as-you-type ESI testing tool.
+* **Edgescape** - geographical information about end users. The `--geo` flag can be used to enable or disable this for a given host (it's enabled by default). ETS uses static mocked data for these values with the following defaults:
 ```
 georegion    = 246
 country_code = US
@@ -31,7 +31,7 @@ timezone     = PST
 network_type = dialup
 ```
 
-In order to access the ETS server, port 80 on the container must be exposed to the host. The host port which is bound to port 80 on the container is referred to as the **ETS port**. Docs and ESI code samples can be accessed at `http://localhost:<ETS port>/`. The playground can be accessed at `http://localhost:<ETS port>/playground`. Settings for the sandbox origin can be set using the hostname `localhost`. Source code versions of ESI pages hosted on the sandbox origin can be accessed at `http://localhost:<ETS port>/sandbox`.
+In order to access the ETS server, port 80 on the container must be exposed to the host. The host port which is bound to port 80 on the container is referred to as the **ETS port**. Documentation and ESI code samples can be accessed at `http://localhost:<ETS port>/`. The playground can be accessed at `http://localhost:<ETS port>/playground`. Settings for the sandbox origin can be set using the hostname `localhost`. Source code versions of ESI pages hosted on the sandbox origin can be accessed at `http://localhost:<ETS port>/sandbox`.
 
 ## Basic usage
 `docker run -ti -p 8080:80 akamaiesi/ets-docker:latest`
@@ -50,7 +50,7 @@ In order to access the ETS server, port 80 on the container must be exposed to t
 
 ### Remote origin with ESI Debugging enabled
 `docker run -ti -p 8080:80 akamaiesi/ets-docker:latest --remote_origin yoursite.example.com:443 --debug yoursite.example.com`
-* This will enable ESI debugging for a remote origin on `yoursite.example.com`. To get processed ESI page from yoursite.example.com, add "Host: yoursite.example.com" header to request for `http://localhost:8080/my_page.html`
+* This will enable ESI debugging for a remote origin on `yoursite.example.com`. To get a processed ESI page from yoursite.example.com, add "Host: yoursite.example.com" header to request for `http://localhost:8080/my_page.html`
 
 ### Remote origin with GEO setting
 `docker run -ti -p 8080:80 akamaiesi/ets-docker:latest \
@@ -74,7 +74,7 @@ To view built-in documentation of all of the command-line arguments, run:
 ### Short flags
 For brevity and convenience, each argument has both a long and a short flag. e.g. `--remote_origin` and `-r` are equivalent. Run `docker run akamaiesi/ets-docker:latest -h` for more information.
 
-### Gotchas/limitations
+### Argument formatting notes
 The `--geo` and `--debug` flags are keyed on `hostname` only, not `hostname:port`, even though `--remote_origin` allows both. The following command will result in an error:
 
 `docker run -ti 8080:80 akamaiesi/ets-docker:latest --remote_origin yoursite.example.com:8888 --debug yoursite.example.com:8888`
@@ -93,12 +93,9 @@ Using `docker run`'s `-d` argument (and removing `-t` or `-i`), you can run the 
 To stop the container, use `docker ps` to obtain the container ID and `docker stop` or `docker kill` to make it exit. 
 
 ## Networking
-Users have a variety of options for how to expose ports with Docker. We've chosen to suggest explicit port publishing/mapping due to its compatibility and simplicity. See [this article](https://www.ctl.io/developers/blog/post/docker-networking-rules/) for more information on Docker networking options.
+We suggest explicit port publishing and mapping due to its compatibility and simplicity. See [this article](https://www.ctl.io/developers/blog/post/docker-networking-rules/) for more information on Docker networking options.
 
-### Note for Docker for Mac
-Docker for Mac doesn't currently support `--net host`; [you must forward ports](https://docs.docker.com/docker-for-mac/networking/#there-is-no-docker0-bridge-on-macos).
-
-## Configuration Settings
+## Configuration settings
 ### Primary
 * `--remote_origin <hostname:port>` - hostname and port to use for an additional
   remote/upstream origin
@@ -110,11 +107,11 @@ Docker for Mac doesn't currently support `--net host`; [you must forward ports](
       dma=807,pmsa=7400,areacode=408,county=SANTACLARA,fips=06085,lat=37.3353,
       long=-121.8938,timezone=PST,network_type=dialup`
 
-## TLS/HTTPS
-The ESI test server doesn't support HTTPS for incoming connections, but remote origins using TLS are supported; just add them with port 443, e.g. `--remote_origin yoursite.example.com:443`. ETS will unset the `Content-Security-Policy` response header to ensure that browsers will not upgrade ETS requests to a secure/HTTPS schema.
+## Support for HTTPS
+The ESI test server doesn't support HTTPS for incoming connections, but remote origins using it are supported. Add them with port 443, e.g. `--remote_origin yoursite.example.com:443`. ETS will unset the `Content-Security-Policy` response header to ensure that browsers will not upgrade ETS requests to a secure/HTTPS schema.
 
 ## Container as origin
-In some cases, you may want to specify a server running in another container as an origin. There are [diverse ways to network containers](https://docs.docker.com/engine/userguide/networking/). In the following example, a combination of Docker's `--add-host` parameter and the port in ETS' `--remote_origin` parameter are used to configure an origin hosted by another container, e.g.:
+In some cases you may want to specify a server running in another container as an origin. There are [many ways to network containers](https://docs.docker.com/engine/userguide/networking/). In this example, a combination of Docker's `--add-host` parameter and the port in ETS' `--remote_origin` parameter are used to configure an origin hosted by another container:
 * `docker run -d -p 9080:8080 -v <directory of ESI files>:/public redsadic/docker-http-server`
 * `docker run -d -p 8080:80 --add-host test.box:<Docker host IP> akamaiesi/ets-docker:latest --remote_origin test.box:9080 `
 
@@ -128,7 +125,7 @@ You can trivially mount HTML files containing ESI tags in the sandbox server as 
 
 `docker run -ti -p 8080:80 -v $(pwd)/my_esi_pages:/opt/akamai-ets/virtual/localhost/docs akamaiesi/ets-docker:latest`
 
-If you issue requests via the **ETS port**, the ESI tags will be processed. If you want to enable ESI debugging, pass the `--debug localhost` argument. If you'd like to still be able to access default ETS server content (main page and ESI examples), mount your local folder as a subfolder, i.e.:
+If you issue requests via the **ETS port**, the ESI tags will be processed. If you want to enable ESI debugging, pass the `--debug localhost` argument. If you'd like to still be able to access default ETS server content (main page and ESI examples), mount your local folder as a subfolder:
 
 `-v $(pwd)/my_esi_pages:/opt/akamai-ets/virtual/localhost/docs/my_esi_pages` 
 
@@ -145,7 +142,7 @@ Your pages at `/my_esi_pages/playground` will be accessible at `http://localhost
 A basic status page implemented using Apache's `mod_status` module is available at `http://localhost:<ETS port>/server-status`.
 
 ## ESI playground
-ESI playground is a real time, test-as-you-type ESI testing tool, it's available at `http://localhost:<ETS port>/playground`.
+ESI playground is a real-time, test-as-you-type ESI testing tool, it's available at `http://localhost:<ETS port>/playground`.
 
 ## ESI code examples
 A set of ESI examples can be accessed at `http://localhost:<ETS port>/esi-examples/index.html`.
