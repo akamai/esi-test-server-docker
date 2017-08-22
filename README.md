@@ -1,7 +1,7 @@
 # Akamai ETS Docker Image
 
 ## About
-This container runs the Akamai Edge Side Includes Test Server (ETS).
+This container runs the Akamai Edge Side Includes (ESI) Test Server.
 
 ![ETS diagram](https://raw.githubusercontent.com/akamai/esi-test-server-docker/master/ets-diagram.png)
 
