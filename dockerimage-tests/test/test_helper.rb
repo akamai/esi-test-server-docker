@@ -27,10 +27,10 @@ module Minitest
     MAX_PORT_WAIT = 5 # seconds
     HOST_HOSTNAME = 'localhost'
     DEFAULT_APACHE_HOST = 'localhost'
-    ESI_PORT = 80
+    INTERNAL_PORT = 80
 
     def start_containers(args = nil, wait = true)
-      docker_cmd = "docker run -d -p #{ESI_PORT} " \
+      docker_cmd = 'docker run -d -P ' \
           "-v #{LOCAL_MOUNT_DIR}:#{REMOTE_MOUNT_DIR} #{IMAGE_NAME} #{args.nil? ? '' : args}"
       puts "Docker run command: #{docker_cmd}"
 
@@ -42,7 +42,7 @@ module Minitest
       end
       @container_id = stdout_stderr.delete("\n")
 
-      @esi_port = `docker port #{@container_id} #{ESI_PORT}`.scan(/:(\d+)/)[0][0]
+      @esi_port = `docker port #{@container_id}`.scan(/#{INTERNAL_PORT}.+:(\d+)/)[0][0]
 
       return unless wait
       wait_for_port_or_fail(HOST_HOSTNAME, @esi_port)
