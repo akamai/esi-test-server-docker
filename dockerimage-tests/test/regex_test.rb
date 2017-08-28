@@ -25,7 +25,7 @@ class RegexTest < Minitest::Test
     response = HTTParty.get(url)
     assert_equal(200, response.code)
 
-  assert(response.body.include?('true'), "Value 'true' not found in output");
+    assert(response.body.include?('true'), "Value 'true' not found in output");
   end
 
   def test_utf8_regex_works

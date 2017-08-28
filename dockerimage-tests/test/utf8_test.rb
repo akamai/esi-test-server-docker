@@ -18,7 +18,6 @@
 require './test/test_helper'
 
 class Utf8Test < Minitest::Test
-
   def test_utf8_assignment_works
     start_containers
     url = "http://#{HOST_HOSTNAME}:#{@esi_port}/advanced/utf8_assignment.html"
@@ -31,7 +30,7 @@ class Utf8Test < Minitest::Test
 
   def test_utf8_querystring_works
     start_containers
-    echoval = "à"
+    echoval = 'à'
     url = "http://#{HOST_HOSTNAME}:#{@esi_port}/advanced/utf8_querystring.html"
     puts "URL: #{url}"
     response = HTTParty.get(url, query: { 'value' => echoval })
