@@ -156,8 +156,14 @@ An example of how to use the ETS docker image as part of test automation can be 
 ## Security
 This software should only be used in restricted environments for testing and development. For security on public or untrusted networks, ensure that your Docker network configuration does not expose ports except to the local machine.
 
-## License
+## Support
+For support with Edge Side Includes or the ESI Test Server, please reach out through [standard support channels](https://www.akamai.com/us/en/support/).
 
+To report a bug, please [create a Github issue](https://github.com/akamai/esi-test-server-docker/issues/new) or email [esi-test-server](mailto:esi-test-server@akamai.com).
+
+To report a security vulnerability, please email [security@akamai.com](mailto:security@akamai.com). ([GPG key](https://www.akamai.com/us/en/multimedia/documents/infosec/akamai-security-general.pub))
+
+## License
 The Dockerfile and associated code samples and scripts are licensed under the Apache License 2.0.
 
 Licenses for the products installed within the image:
