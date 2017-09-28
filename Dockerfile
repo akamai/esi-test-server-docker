@@ -40,8 +40,8 @@ RUN mkdir -p /tmp/akamai-ets && \
     apt-get install -y build-essential g++ python nodejs git && \
     # install playground, using code from https://github.com/newscorpaus/akamai-ets/Dockerfile
     cd /tmp && \
-    git clone https://github.com/newscorpaus/akamai-ets.git && \
-    cd akamai-ets; git checkout 4d3cf03 && \
+    git clone https://github.com/serjou/akamai-ets.git && \
+    cd akamai-ets; git checkout d81f36c && \
     mkdir -p ${ETS_DIR}/conf/ets/macros/ && cp files/conf/ets/macros/Playground.macro ${ETS_DIR}/conf/ets/macros/ && \
     cp files/conf/ets/vh_playground.conf ${ETS_DIR}/conf/ets/ && \
     cp -R /tmp/playground/. ${ETS_DIR}/conf/ && \
