@@ -13,5 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<esi:assign name="avalue" value="'à'"/>
-<esi:vars>$(avalue)</esi:vars>
+<esi:choose>
+    <esi:when test="'こんにちは世界' matches '''^\X{7}$'''">true</esi:when>
+    <esi:otherwise>false</esi:otherwise>
+</esi:choose>
