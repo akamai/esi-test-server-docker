@@ -83,6 +83,10 @@ The correct form is:
 
 `docker run -ti 8080:80 akamaiesi/ets-docker:latest --remote_origin yoursite.example.com:8888 --debug yoursite.example.com`
 
+## Caveats
+* ETS does not currently return `gzip`ed responses, but it does support `gzip` at the origin.
+* ETS strips `Content-Security-Policy` headers to enable support for proxying HTTPS origins via HTTP.
+
 ## Advanced usage
 
 ### Daemonizing to run in background
@@ -116,6 +120,9 @@ In some cases you may want to specify a server running in another container as a
 * `docker run -d -p 8080:80 --add-host test.box:<Docker host IP> akamaiesi/ets-docker:latest --remote_origin test.box:9080 `
 
 You can then access ESI pages on that server using `curl -H 'Host: test.box' http://localhost:8080`.
+
+## Docker Compose
+An example of how to use ETS with [Docker Compose](https://docs.docker.com/compose/) can be found [here](https://github.com/akamai/esi-test-server-docker/tree/master/dockerimage-tests/test/gzip). You can pass command arguments via the `ETS_CLI_ARGS` environment variable.
 
 ## Viewing logs and modifying files
 You can shell into the container using `docker exec -ti <container ID> bash`. Logs can be found in `/opt/akamai-ets/logs`.
