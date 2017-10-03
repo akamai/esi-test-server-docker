@@ -91,6 +91,10 @@ module Minitest
       false
     end
 
+    def string_has_no_esi_tags?(str)
+      !(str =~ /<esi:/)
+    end
+
     def container_stdout
       stdout, = Open3.capture3("docker logs #{@container_id}")
       stdout

@@ -19,6 +19,10 @@ IncludeOptional conf/ets/macros/*.macro
 
 Listen 82
 
+<IfModule deflate_module>
+    SetOutputFilter INFLATE
+</IfModule>
+
 Use Playground "preview" "off" "SUBST_GEO_SUBST"
 Use Playground "debug" "on" "SUBST_GEO_SUBST"
 UndefMacro Playground

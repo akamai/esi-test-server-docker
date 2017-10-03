@@ -83,6 +83,10 @@ The correct form is:
 
 `docker run -ti 8080:80 akamaiesi/ets-docker:latest --remote_origin yoursite.example.com:8888 --debug yoursite.example.com`
 
+## Caveats
+* ETS does not currently return `gzip`ed responses, but it does support `gzip` at the origin.
+* ETS strips `Content-Security-Policy` headers to enable support for proxying HTTPS origins via HTTP.
+
 ## Advanced usage
 
 ### Daemonizing to run in background
@@ -117,6 +121,9 @@ In some cases you may want to specify a server running in another container as a
 
 You can then access ESI pages on that server using `curl -H 'Host: test.box' http://localhost:8080`.
 
+## Docker Compose
+An example of how to use ETS with [Docker Compose](https://docs.docker.com/compose/) can be found [here](https://github.com/akamai/esi-test-server-docker/tree/master/dockerimage-tests/test/gzip). You can pass command arguments via the `ETS_CLI_ARGS` environment variable.
+
 ## Viewing logs and modifying files
 You can shell into the container using `docker exec -ti <container ID> bash`. Logs can be found in `/opt/akamai-ets/logs`.
 
@@ -150,8 +157,8 @@ A set of ESI examples can be accessed at `http://localhost:<ETS port>/esi-exampl
 ## Other ports used by container
 The ETS services run on the following Docker container ports: 81 (sandbox), 82 (ESI playground), 83 (ESI processing for sandbox), with a hostname of `localhost`.
 
-## ETS docker test automation examples
-An example of how to use the ETS docker image as part of test automation can be found in Git [here](https://github.com/akamai/esi-test-server-docker/tree/master/dockerimage-tests).
+## ETS Docker test automation examples
+An example of how to use the ETS Docker image as part of test automation can be found in Git [here](https://github.com/akamai/esi-test-server-docker/tree/master/dockerimage-tests).
 
 ## Security
 This software should only be used in restricted environments for testing and development. For security on public or untrusted networks, ensure that your Docker network configuration does not expose ports except to the local machine.
