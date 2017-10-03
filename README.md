@@ -166,7 +166,7 @@ This software should only be used in restricted environments for testing and dev
 ## Support
 For support with Edge Side Includes or the ESI Test Server, please reach out through [standard support channels](https://www.akamai.com/us/en/support/).
 
-To report a bug, please [create a Github issue](https://github.com/akamai/esi-test-server-docker/issues/new) or email [esi-test-server](mailto:esi-test-server@akamai.com).
+To report a bug, please [create a GitHub issue](https://github.com/akamai/esi-test-server-docker/issues/new) or email [esi-test-server@akamai.com](mailto:esi-test-server@akamai.com).
 
 To report a security vulnerability, please email [security@akamai.com](mailto:security@akamai.com). ([GPG key](https://www.akamai.com/us/en/multimedia/documents/infosec/akamai-security-general.pub))
 
