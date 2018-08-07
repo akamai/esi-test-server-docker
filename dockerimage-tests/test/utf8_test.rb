@@ -27,7 +27,7 @@ class Utf8Test < Minitest::Test
 
     response.body.force_encoding('UTF-8')
     assert(string_has_no_esi_tags?(response.body), "ESI wasn't processed.")
-    assert(response.body.include?('à'), "Value 'à' not found in output");
+    assert(response.body.include?('à'), "Value 'à' not found in output")
   end
 
   def test_utf8_querystring_works
@@ -39,6 +39,6 @@ class Utf8Test < Minitest::Test
     assert_equal(200, response.code)
 
     response.body.force_encoding('UTF-8')
-    assert(response.body.include?(echoval), "Value '#{echoval}' not found in output");
+    assert(response.body.include?(echoval), "Value '#{echoval}' not found in output")
   end
 end

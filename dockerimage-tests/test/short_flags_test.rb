@@ -46,7 +46,7 @@ class ShortFlagsTest < Minitest::Test
   end
 
   def test_help_shortflag_works
-    start_containers('-h', false)
+    start_containers('-h', true)
     sleep 5
     assert(container_stderr.include?('For additional documentation'))
   end

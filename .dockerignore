@@ -1,2 +1,3 @@
 *.dockerimage.*
 **/.git
+**/.idea

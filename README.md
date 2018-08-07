@@ -55,7 +55,7 @@ In order to access the ETS server, port 80 on the container must be exposed to t
 ### Remote origin with GEO setting
 `docker run -ti -p 8080:80 akamaiesi/ets-docker:latest \
 --remote_origin yoursite.example.com:443 \ --geo
-yoursite.example.com:georegion=246,country_code=US,region_code=CA, \
+yoursite.example.com:yoursite.example.com:georegion=246,country_code=US,region_code=CA, \
 city=SANJOSE,dma=807,pmsa=7400,areacode=408,county=SANTACLARA,fips=06085, \
 lat=37.3353,long=-121.8938,timezone=PST,network_type=dialup akamaiesi/ets-docker:latest`
 * This will enable Edgescape for `yoursite.example.com` with the values specified in the corresponding `geo` argument.
@@ -175,6 +175,6 @@ The Dockerfile and associated code samples and scripts are licensed under the Ap
 
 Licenses for the products installed within the image:
 * Apache HTTP Server: [Apache License 2.0](https://github.com/akamai/esi-test-server-docker/blob/master/licenses/Apache.md)
-* Akamai ESI Test Server: Copyright 2017 Akamai Technologies, Inc. [Akamai License Agreement](https://github.com/akamai/esi-test-server-docker/blob/master/licenses/Akamai.md)
+* Akamai ESI Test Server: Copyright 2018 Akamai Technologies, Inc. [Akamai License Agreement](https://github.com/akamai/esi-test-server-docker/blob/master/licenses/Akamai.md)
 * libcurl: Copyright (c) 1996 - 2017, Daniel Stenberg, daniel@haxx.se, and many contributors, see the THANKS file. [MIT License](https://github.com/akamai/esi-test-server-docker/blob/master/licenses/Curl.md)
 * ESI Playground: Copyright (c) 2017 News Corp Australia [MIT License](https://github.com/akamai/esi-test-server-docker/blob/master/licenses/NewsCorpAustralia.md)

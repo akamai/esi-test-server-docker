@@ -22,13 +22,13 @@ FULL_NAME = ${REPO}/${NAME}
 
 all: build test dist
 
-# Add repo here if/once one is determined
 build: .FORCE  ## Build the docker image
 	docker build -f Dockerfile -t ${FULL_NAME}:${VERSION} -t ${FULL_NAME}:latest --no-cache .
 
-test: 
-	pushd dockerimage-tests && rake && popd
+test:
+	(cd dockerimage-tests && rake)
 
+# This target generally isn't used, but is here in case you wanted to share a local build.
 dist: build
 	docker save ${FULL_NAME} -o ${NAME}.${VERSION}.dockerimage.tar
 	gzip -f ${NAME}.${VERSION}.dockerimage.tar
