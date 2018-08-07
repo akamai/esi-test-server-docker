@@ -19,8 +19,9 @@ require './test/test_helper'
 
 class GzipTest < Minitest::Test
   def setup
-    `pushd #{__dir__}; docker-compose up -d; popd`
-    @esi_port = `docker port gzip_ets_1`.scan(/#{INTERNAL_PORT}.+:(\d+)/)[0][0]
+    Dir.chdir(__dir__) { `docker-compose up -d` }
+
+    @esi_port = host_port_for('gzip_ets_1', INTERNAL_PORT)
     wait_for_port_or_fail(HOST_HOSTNAME, @esi_port)
   end
 
@@ -33,7 +34,7 @@ class GzipTest < Minitest::Test
     assert_equal(200, response.code)
 
     assert(string_has_no_esi_tags?(response.body), "ESI wasn't processed.")
-    assert(response.body.include?('hello'), "Value 'hello' not found in output");
+    assert(response.body.include?('hello'), "Value 'hello' not found in output")
 
     nginx_logs = `docker logs gzip_origin_1`.lines
     matching_lines = nginx_logs.select do |line|
@@ -44,6 +45,6 @@ class GzipTest < Minitest::Test
   end
 
   def teardown
-    `pushd #{__dir__}; docker-compose stop; popd`
+    Dir.chdir(__dir__) { `docker-compose stop` }
   end
 end

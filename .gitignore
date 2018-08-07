@@ -1,2 +1,3 @@
 *.dockerimage.*
 build.properties
+**/.idea

@@ -22,14 +22,14 @@ require 'open3'
 module Minitest
   class Test
     IMAGE_NAME = 'akamaiesi/ets-docker:latest'
-    LOCAL_MOUNT_DIR = "#{File.expand_path(File.dirname(__FILE__))}/../html"
+    LOCAL_MOUNT_DIR = "#{File.expand_path(__dir__)}/../html"
     REMOTE_MOUNT_DIR = '/opt/akamai-ets/virtual/localhost/docs'
     MAX_PORT_WAIT = 5 # seconds
     HOST_HOSTNAME = 'localhost'
     DEFAULT_APACHE_HOST = 'localhost'
     INTERNAL_PORT = 80
 
-    def start_containers(args = nil, wait = true)
+    def start_containers(args = nil, expect_startup_failure = false)
       docker_cmd = 'docker run -d -P ' \
           "-v #{LOCAL_MOUNT_DIR}:#{REMOTE_MOUNT_DIR} #{IMAGE_NAME} #{args.nil? ? '' : args}"
       puts "Docker run command: #{docker_cmd}"
@@ -40,26 +40,29 @@ module Minitest
         puts msg
         fail msg
       end
+
       @container_id = stdout_stderr.delete("\n")
 
-      @esi_port = `docker port #{@container_id}`.scan(/#{INTERNAL_PORT}.+:(\d+)/)[0][0]
+      return if expect_startup_failure
 
-      return unless wait
+      @esi_port = host_port_for(@container_id, INTERNAL_PORT)
       wait_for_port_or_fail(HOST_HOSTNAME, @esi_port)
-    rescue => e
+    rescue StandardError => e
       if `docker inspect -f {{.State.Running}} #{@container_id}`.start_with? 'false'
         puts "Container #{@container_id} wasn't running after " \
                       'port check failure.'
         puts "Container exit code was: #{`docker inspect -f {{.State.ExitCode}} #{@container_id}`}"
         puts "Container output was:\n#{`docker logs #{@container_id}`}"
       end
-      throw e
+      puts 'Error in start_containers'
+      puts e
+      fail 'Error in start_containers'
     end
 
     def teardown
       `docker kill #{@container_id}`
       `docker rm #{@container_id}`
-    rescue => e
+    rescue StandardError => e
       puts 'Error in teardown:'
       puts e
     end
@@ -86,13 +89,13 @@ module Minitest
     def check_port_for_http_response(host, port)
       url = "http://#{host}:#{port}"
       response = HTTParty.get(url, timeout: MAX_PORT_WAIT)
-      return !response.code.nil?
-    rescue
+      !response.code.nil?
+    rescue StandardError
       false
     end
 
     def string_has_no_esi_tags?(str)
-      !(str =~ /<esi:/)
+      str !~ /<esi:/
     end
 
     def container_stdout
@@ -103,6 +106,26 @@ module Minitest
     def container_stderr
       _, stderr, = Open3.capture3("docker logs #{@container_id}")
       stderr
+    end
+
+    def host_port_for(container_id, internal_port)
+      docker_port_output, docker_port_status = Open3.capture2('docker', 'port', container_id)
+
+      unless docker_port_status.success? && !docker_port_output.empty?
+        message = "Failed to get port information for container id #{container_id} and port #{internal_port}"
+        puts message
+        fail message
+      end
+
+      docker_port_match = docker_port_output.scan(/#{internal_port}.+:(\d+)/)
+
+      unless docker_port_match && docker_port_match[0] && docker_port_match[0][0]
+        message = "Failed to extract a port ID from the following command output: #{docker_port_output}"
+        puts message
+        fail message
+      end
+
+      docker_port_match[0][0]
     end
   end
 end
